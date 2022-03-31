@@ -12,3 +12,4 @@ yarn.lock
 
 #build folder
 /build/
+/prisma/schema.prisma
