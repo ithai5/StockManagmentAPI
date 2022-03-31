@@ -1,0 +1,14 @@
+#webstorm
+.idea
+
+#environment variables
+.env
+
+
+/node_modules/
+
+yarn-error.log
+yarn.lock
+
+#build folder
+/build/
