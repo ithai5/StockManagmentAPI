@@ -13,3 +13,9 @@ yarn.lock
 #build folder
 /build/
 /prisma/schema.prisma
+
+#Text files -- Personal notes
+*.txt
+
+#prisma ORM
+*.prisma
