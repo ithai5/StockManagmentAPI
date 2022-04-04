@@ -5,12 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "startbuild": "tsc -b & node build/app.js",
+     "startbuild": "tsc -b & node build/app.js",
     "start": "nodemon --exec yarn startbuild",
     "tdd": "nodemon --exec jest",
-    "prisma":"prisma init --datasource-provider mysql && prisma db pull && pal schema camel-case",
+    "prisma": "prisma init --datasource-provider mysql && prisma db pull  && prisma format && prisma generate && pal schema camel-case",
     "dev": "yarn install && yarn prisma"
-
   },
   "keywords": [],
   "author": "",
