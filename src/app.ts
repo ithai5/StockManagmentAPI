@@ -18,7 +18,7 @@ const swaggerOptions = {
     info: {
       title: 'api title1',
       description: 'api description',
-      servers: ["http://localhost:3001"],
+      servers: [`http://localhost:${port}`],
     }
   },
   apis: ["./src/app.ts"],
