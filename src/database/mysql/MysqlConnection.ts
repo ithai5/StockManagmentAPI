@@ -1,15 +1,31 @@
-import mysql from "mysql2/promise";
-import "dotenv/config";
-const pool = mysql.createPool({
-  /*Checks about connection limit thingy*/
-  connectionLimit: 10,
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-});
+import { DbObjectMapping } from "../dbObjectMapping";
+import { PrismaClient } from "@prisma/client";
+import { StockValue } from "../../modules/walletId";
 
-export const mysqlQuery = {
-  query: <T>(queryText: string, type: T, params?: string) =>
-    pool.query<[T, any]>(queryText, params),
+const prismaMySql = new PrismaClient();
+
+export const mySqlData: DbObjectMapping = {
+  async getWalletStocks(walletId) {
+    const queryResult = await prismaMySql.walletHasStock.findMany({
+      where: {
+        fkWalletId: walletId,
+      },
+    });
+    return queryResult.map((result) => {
+      const stockValue: StockValue = {
+        stockTicker: result.fkStockTicker,
+        stockShares: result.stockShares,
+        avgPrice: result.avgPrice,
+      };
+      return stockValue;
+    });
+  },
+  async getWallet(walletId) {
+    const queryResult = await prismaMySql.wallet.findUnique({
+      where: {
+        walletId: walletId,
+      },
+    });
+    return queryResult ? queryResult : new Error("wallet not found");
+  },
 };
