@@ -13,3 +13,7 @@ yarn.lock
 #build folder
 /build/
 
+
+#Text files -- Personal notes
+mynotes.txt
+
