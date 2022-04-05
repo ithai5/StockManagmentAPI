@@ -1,4 +1,4 @@
-import express = require("express");
+import express from "express";
 import "dotenv/config";
 
 const port = process.env.APP_PORT || 4200;
@@ -9,7 +9,7 @@ app.get("/", async (req, res) => {
   res.send({ message: "hello world" });
 });
 
-app.listen(4200, () => {
+app.listen(port, () => {
   console.log("Application is running on port: ", port);
 });
 
