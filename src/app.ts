@@ -1,4 +1,4 @@
-import express = require("express");
+import express from "express";
 import "dotenv/config";
 
 const port = process.env.APP_PORT || 4200;

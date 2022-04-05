@@ -1,10 +1,8 @@
-import { DbObjectMapping } from "../dbObjectMapping";
-import { PrismaClient } from "@prisma/client";
-import { StockValue } from "../../modules/walletId";
+import { WalletObjectMapping } from "../walletObjectMapping";
+import { StockValue } from "../../modules/wallet";
+import { prismaMySql } from "../../dbConnection/mySqlConnection";
 
-const prismaMySql = new PrismaClient();
-
-export const mySqlData: DbObjectMapping = {
+export const walletObjectMappingMySQL: WalletObjectMapping = {
   async getWalletStocks(walletId) {
     const queryResult = await prismaMySql.walletHasStock.findMany({
       where: {
@@ -27,5 +25,12 @@ export const mySqlData: DbObjectMapping = {
       },
     });
     return queryResult ? queryResult : new Error("wallet not found");
+  },
+  async getAllWalletsForPlayer(playerId) {
+    return await prismaMySql.wallet.findMany({
+      where: {
+        fkPlayerId: playerId,
+      },
+    });
   },
 };
