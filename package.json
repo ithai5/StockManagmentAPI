@@ -5,11 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-     "startbuild": "tsc -b & node build/app.js",
+    "startbuild": "tsc -b & node build/app.js",
     "start": "nodemon --exec yarn startbuild",
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull  && prisma format && prisma generate && pal schema camel-case",
-    "dev": "yarn install && yarn prisma"
+    "dev": "yarn install && yarn prisma",
+    "devthor": "npx nodemon ./src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +20,9 @@
     "axios": "^0.26.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "swagger-jsdoc": "^6.2.0",
+    "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.16.7",
