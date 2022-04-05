@@ -1,8 +1,5 @@
 import express = require("express");
 import "dotenv/config";
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient();
 
 const port = process.env.APP_PORT || 4201;
 
@@ -29,24 +26,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 // ---------------------------------------------------------------
 
 app.get("/", async (req, res) => {
-  res.send({ message: "hello world2" });
+  res.send({ message: "hello world" });
 });
-
-// Testing swagger documentation: 
-/**
- * @swagger
- * /findAll:
- *  get:
- *    description: Default api, returns 'hello world'
- *    responses:
- *      '200':
- *        description: A succesful response
- */
-app.get('/findAll', async (req: express.Request, res: express.Response) => {
-  const result = await prisma.wallet.findMany();
-  res.send({success: result});
-});
-
 
 app.listen(port, () => {
   console.log("Application is running on port: ", port);
