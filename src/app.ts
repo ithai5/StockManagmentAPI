@@ -2,10 +2,31 @@ import express = require("express");
 import "dotenv/config";
 import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient();
 
 const port = process.env.APP_PORT || 4201;
 
 const app = express();
+
+// --------------------------- Swagger ---------------------------
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'api title1',
+      description: 'api description',
+      servers: ["http://localhost:3001"],
+    }
+  },
+  apis: ["./src/app.ts"],
+}
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+// ---------------------------------------------------------------
 
 app.get("/", async (req, res) => {
   res.send({ message: "hello world2" });
