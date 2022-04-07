@@ -1,4 +1,4 @@
-import { StockValue, Wallet } from "../modules/wallet";
+import { StockValue, Wallet } from "../moduls/wallet";
 
 export interface WalletObjectMapping {
   getWalletStocks: (walletId: number) => Promise<StockValue[]>;

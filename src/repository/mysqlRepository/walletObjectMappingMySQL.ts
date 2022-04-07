@@ -1,5 +1,5 @@
 import { WalletObjectMapping } from "../walletObjectMapping";
-import { StockValue } from "../../modules/wallet";
+import { StockValue } from "../../moduls/wallet";
 import { prismaMySql } from "../../dbConnection/mySqlConnection";
 
 export const walletObjectMappingMySQL: WalletObjectMapping = {
