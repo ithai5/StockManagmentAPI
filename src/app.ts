@@ -1,28 +1,15 @@
 import express from "express";
 import "dotenv/config";
+import swaggerUi from "swagger-ui-express";
+import { swaggerDocs } from "./swagger/swagger";
 
 const port = process.env.APP_PORT || 4200;
 
 const app = express();
 
 // --------------------------- Swagger ---------------------------
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'api title1',
-      description: 'api description',
-      servers: [`http://localhost:${port}`],
-    }
-  },
-  apis: ["./src/app.ts"],
-}
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // ---------------------------------------------------------------
 
 app.get("/", async (req, res) => {

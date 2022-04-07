@@ -1,7 +1,7 @@
-import { StockValue, Wallet } from "../modules/wallet";
+import { StockValue, WalletDto } from "../models/walletDto";
 
 export interface WalletObjectMapping {
   getWalletStocks: (walletId: number) => Promise<StockValue[]>;
-  getWallet: (walletId: number) => Promise<Wallet | Error>;
-  getAllWalletsForPlayer: (playerId: number) => Promise<Wallet[]>;
+  getWallet: (walletId: number) => Promise<WalletDto | Error>;
+  getAllWalletsForPlayer: (playerId: number) => Promise<WalletDto[]>;
 }

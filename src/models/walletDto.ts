@@ -4,7 +4,7 @@ export interface StockValue {
   avgPrice: number;
 }
 
-export interface Wallet {
+export interface WalletDto {
   nickname: string;
   balance: number;
 }
