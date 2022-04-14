@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { LoginRequest } from "../models/loginRequest";
-import { loginAuthentication } from "../sevices/authentication";
-import { authMiddleware, prepareJwt } from "../auth/middleware/authMiddleware";
+import { loginAuthentication, prepareJwt } from "../sevices/authentication";
+import { authMiddleware } from "../auth/middleware/authMiddleware";
 import { Router } from "express";
 
 export const loginRouter = Router();

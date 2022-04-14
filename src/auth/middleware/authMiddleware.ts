@@ -1,22 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import jsonwebtoken from "jsonwebtoken";
+import { verifyJwt } from "../../sevices/authentication";
 
 interface TokenPayload {
   playerId: string;
 }
-
-export const verifyJwt = (jwt: string) => {
-  try {
-    return jsonwebtoken.verify(
-      prepareJwt(jwt),
-      process.env.SESSION_SECRET + ""
-    );
-  } catch (error) {
-    throw Error;
-  }
-};
 export const authMiddleware = (
-  req: Request<{}, {}, TokenPayload>,
+  req: Request<never, never, TokenPayload>,
   res: Response,
   next: NextFunction
 ) => {
@@ -30,6 +19,3 @@ export const authMiddleware = (
     res.send({ message: "unauthorized" });
   }
 };
-
-export const prepareJwt = (bearerToken: string) =>
-  bearerToken.replace(/^Bearer\s+/, "");

@@ -22,6 +22,7 @@ export const generateJwtToken = (data: Object, options: SignOptions) => {
     options
   );
 };
+
 export const loginAuthentication = async (email: string, password: string) => {
   const playerDto = await getPlayerDtoByEmail(email);
   if (passwordDecrypted(password, playerDto.password))
@@ -31,5 +32,20 @@ export const loginAuthentication = async (email: string, password: string) => {
     );
   else throw Error("password and mail does not matched");
 };
+
+export const verifyJwt = (jwt: string) => {
+  try {
+    return jsonwebtoken.verify(
+      prepareJwt(jwt),
+      process.env.SESSION_SECRET + ""
+    );
+  } catch (error) {
+    throw Error;
+  }
+};
+
+export const prepareJwt = (bearerToken: string) =>
+  bearerToken.replace(/^Bearer\s+/, "");
+
 // should be able to change it to any db connection that implement the Authentication interface
 const authentication: Authentication = authenticationMySql;
