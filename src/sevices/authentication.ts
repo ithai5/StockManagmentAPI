@@ -4,6 +4,7 @@ import { PlayerDto } from "../models/playerDto";
 import { Authentication } from "../repository/authentication";
 import jsonwebtoken, { SignOptions } from "jsonwebtoken";
 import "dotenv/config";
+import { SignupDto } from "../models/signupDto";
 
 export async function getPlayerDtoByEmail(email: string): Promise<PlayerDto> {
   const playerDto = await authentication.loginPlayer(email);
@@ -42,6 +43,14 @@ export const verifyJwt = (jwt: string) => {
   } catch (error) {
     throw Error;
   }
+};
+
+const prepareSignupPlayer = (signupDto: SignupDto) => {
+  return { ...signupDto, password: bcryptjs.hashSync(signupDto.password) };
+};
+
+export const signupPlayer = async (signupDto: SignupDto) => {
+  return await authentication.signupPlayer(prepareSignupPlayer(signupDto));
 };
 
 export const prepareJwt = (bearerToken: string) =>

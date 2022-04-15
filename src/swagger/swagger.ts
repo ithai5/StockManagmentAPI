@@ -23,7 +23,7 @@ const swaggerOptions: SwaggerOptions = {
       in: "header",
     },
   },
-  apis: ["./src/app.ts", "./src/routes/*.ts"],
+  apis: ["./src/app.ts", "./src/routes/*.ts", "./src/swagger/schema.ts"],
 };
 
 export const swaggerDocs = swaggerJsDoc(swaggerOptions);
