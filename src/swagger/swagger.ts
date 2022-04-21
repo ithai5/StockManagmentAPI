@@ -9,10 +9,21 @@ const swaggerOptions: SwaggerOptions = {
     openapi: "3.0.0",
     info: {
       title: "Stock Management API",
-      servers: [`http://localhost:${port}`],
+      version: "1.0.0",
+    },
+    servers: [
+      { url: `http://localhost:${port}`, description: "development server" },
+    ],
+  },
+  securityDefinitions: {
+    bearerAuth: {
+      type: "jwt",
+      name: "Authorization",
+      schema: "bearer",
+      in: "header",
     },
   },
-  apis: ["./src/app.ts"],
+  apis: ["./src/app.ts", "./src/routes/*.ts", "./src/swagger/schema.ts"],
 };
 
 export const swaggerDocs = swaggerJsDoc(swaggerOptions);

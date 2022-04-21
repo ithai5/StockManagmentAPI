@@ -2,28 +2,21 @@ import express from "express";
 import "dotenv/config";
 import swaggerUi from "swagger-ui-express";
 import { swaggerDocs } from "./swagger/swagger";
+import cors from "cors";
+import { auth } from "./routes/auth";
 
-const port = process.env.APP_PORT || 4200;
+const PORT = process.env.APP_PORT || 4200;
 
 const app = express();
-
-// --------------------------- Swagger ---------------------------
+app.use(express.json());
+app.use("/authorization", auth);
+app.use(cors());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-// ---------------------------------------------------------------
-
-app.get("/", async (req, res) => {
-  res.send({ message: "hello world" });
+app.get("/", (req, res) => {
+  res.redirect("/api-docs");
 });
 
-app.listen(port, () => {
-  console.log("Application is running on port: ", port);
+app.listen(PORT, () => {
+  console.log("Application is running on port: ", PORT);
 });
-
-/*figure out about session tokens + identity
- *login
- *  post(/login, (email, encrypted password) => sort of session token / access deny)
- *  get(/wallet, (token)=> list of wallet)
- *  get(/stocks in wallet, (somehow token + wallet id) => list of stocks in the wallet)
- *  post(/buy a stock, (token, wallet id, stock, amount) => return updated wallet)
- * */
