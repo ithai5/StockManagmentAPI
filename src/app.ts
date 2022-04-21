@@ -1,9 +1,9 @@
 import express from "express";
 import "dotenv/config";
 import swaggerUi from "swagger-ui-express";
-import { swaggerDocs } from "./swagger/swagger";
+import { swaggerDocs } from "./swagger/index.swagger";
 import cors from "cors";
-import { auth } from "./routes/auth";
+import { auth } from "./routes/auth.route";
 
 const PORT = process.env.APP_PORT || 4200;
 

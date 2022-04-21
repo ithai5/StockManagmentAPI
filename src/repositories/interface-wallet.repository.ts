@@ -1,4 +1,5 @@
-import { StockValue, WalletDto } from "../models/walletDto";
+import { StockValue, WalletDto } from "../models/dto/wallet.dto";
+
 
 export interface WalletObjectMapping {
   getWalletStocks: (walletId: number) => Promise<StockValue[]>;
