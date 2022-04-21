@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { verifyJwt } from "../../sevices/authentication";
+import { verifyJwt } from "../../sevices/authentication.service";
 
 interface TokenPayload {
   playerId: string;

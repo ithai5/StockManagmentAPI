@@ -1,10 +1,11 @@
-import { authenticationMySql } from "../repository/mysqlRepository/authenticationMySql";
+import { authenticationMySql } from "../repositories/mysql/authentication.mysql.repository";
 import bcryptjs from "bcryptjs";
-import { PlayerDto } from "../models/playerDto";
-import { AuthenticationObejctMapping } from "../repository/authenticationObejctMapping";
+import { PlayerDto } from "../models/dto/player.dto";
+import { InterfaceAuthentication } from "../repositories/interface-authentication.repository";
 import jsonwebtoken, { SignOptions } from "jsonwebtoken";
 import "dotenv/config";
-import { SignupDto } from "../models/signupDto";
+import { SignupDto } from "../models/dto/signup.dto";
+
 
 export async function getPlayerDtoByEmail(email: string): Promise<PlayerDto> {
   const playerDto = await authentication.loginPlayer(email);
@@ -57,4 +58,4 @@ export const prepareJwt = (bearerToken: string) =>
   bearerToken.replace(/^Bearer\s+/, "");
 
 // should be able to change it to any db connection that implement the Authentication interface
-const authentication: AuthenticationObejctMapping = authenticationMySql;
+const authentication: InterfaceAuthentication = authenticationMySql;

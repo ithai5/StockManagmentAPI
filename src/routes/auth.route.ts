@@ -4,9 +4,9 @@ import {
   loginAuthentication,
   prepareJwt,
   signupPlayer,
-} from "../sevices/authentication";
-import { authMiddleware } from "../middleware/authorization/authMiddleware";
-import { SignupDto } from "../models/signupDto";
+} from "../sevices/authentication.service";
+import { authMiddleware } from "../middlewares/authorization/auth.middleware";
+import { SignupDto } from "../models/dto/signup.dto";
 
 export const auth = Router();
 

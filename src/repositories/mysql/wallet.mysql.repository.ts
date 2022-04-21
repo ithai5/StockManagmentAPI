@@ -1,6 +1,6 @@
-import { WalletObjectMapping } from "../walletObjectMapping";
-import { StockValue } from "../../models/walletDto";
-import { prismaMySql } from "../../dbConnection/mySqlConnection";
+import { WalletObjectMapping } from "../interface-wallet.repository";
+import { prismaMySql } from "../../database-connection/mysql.database-connection";
+import { StockValue } from "../../models/dto/wallet.dto";
 
 export const walletObjectMappingMySQL: WalletObjectMapping = {
   async getWalletStocks(walletId) {

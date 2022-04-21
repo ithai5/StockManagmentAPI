@@ -1,9 +1,9 @@
-import { AuthenticationObejctMapping } from "../authenticationObejctMapping";
-import { PlayerDto } from "../../models/playerDto";
-import { prismaMySql } from "../../dbConnection/mySqlConnection";
-import { SignupDto } from "../../models/signupDto";
+import { InterfaceAuthentication } from "../interface-authentication.repository";
+import { PlayerDto } from "../../models/dto/player.dto";
+import { prismaMySql } from "../../database-connection/mysql.database-connection";
+import { SignupDto } from "../../models/dto/signup.dto";
 
-export const authenticationMySql: AuthenticationObejctMapping = {
+export const authenticationMySql: InterfaceAuthentication = {
   signupPlayer(signupDto: SignupDto): Promise<PlayerDto> {
     return prismaMySql.player.create({ data: signupDto }).catch((reason) => {
       throw Error(reason);
