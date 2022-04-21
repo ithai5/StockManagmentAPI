@@ -22,8 +22,8 @@ model order {
 model player {
   playerId Int      @id @default(autoincrement()) @map("player_id")
   name     String   @db.VarChar(100)
-  email    String   @unique(map: "email_UNIQUE") @db.VarChar(45)
-  phone    String   @unique(map: "phone_UNIQUE") @db.VarChar(45)
+  email    String   @unique @db.VarChar(45)
+  phone    String   @unique @db.VarChar(45)
   password String   @db.Char(60)
 }
 

@@ -31,7 +31,7 @@
  *        email: user@example.com
  *        password: "123456789"
  *        phone: "004531000000"
- *        name: test user
+ *        name: finnhubService user
  *    LoginResponse:
  *      type: object
  *      properties:
@@ -52,7 +52,7 @@
  *          description: a password that encrypted into the DB
  *      example:
  *        email: test@gmail.com
- *        password: test
+ *        password: 123456
  *    PlayerDto:
  *      type: object
  *      required:
@@ -78,7 +78,7 @@
  *      example:
  *        playerId: 100
  *        name: John Doe
- *        email: test@example.com
+ *        email: finnhubService@example.com
  *        phone: 3131313131
  *        password: abcd1234xyz!
  *

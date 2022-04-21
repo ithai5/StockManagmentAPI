@@ -10,7 +10,8 @@
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull  && pal schema camel-case && npx prisma generate",
     "dev": "yarn install && yarn start",
-    "devthor": "npx nodemon ./src/app.ts"
+    "devthor": "npx nodemon ./src/app.ts",
+    "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.16.7",
     "@paljs/cli": "^4.0.18",
+    "@types/axios": "^0.14.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
