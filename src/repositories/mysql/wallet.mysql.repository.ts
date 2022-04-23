@@ -1,13 +1,14 @@
-import { WalletObjectMapping } from "../interface-wallet.repository";
+import { InterfaceWalletRepository } from "../interface-wallet.repository";
 import { prismaMySql } from "../../database-connection/mysql.database-connection";
-import { StockValue } from "../../models/dto/wallet.dto";
+import { StockValue, WalletDtoSelect, StockValueSelect } from "../../models/dto/wallet.dto";
 
-export const walletObjectMappingMySQL: WalletObjectMapping = {
+export const WalletMysqlRepository: InterfaceWalletRepository = {
   async getWalletStocks(walletId) {
     const queryResult = await prismaMySql.walletHasStock.findMany({
       where: {
         fkWalletId: walletId,
       },
+      select: StockValueSelect // NOTE: Is redundant since we're creating the object below
     });
     return queryResult.map((result) => {
       const stockValue: StockValue = {
@@ -23,14 +24,16 @@ export const walletObjectMappingMySQL: WalletObjectMapping = {
       where: {
         walletId: walletId,
       },
+      select: WalletDtoSelect
     });
     return queryResult ? queryResult : new Error("wallet not found");
   },
   async getAllWalletsForPlayer(playerId) {
-    return await prismaMySql.wallet.findMany({
+    return prismaMySql.wallet.findMany({
       where: {
         fkPlayerId: playerId,
       },
+      select: WalletDtoSelect
     });
   },
 };

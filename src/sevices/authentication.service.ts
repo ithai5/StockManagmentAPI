@@ -51,7 +51,7 @@ const prepareSignupPlayer = (signupDto: SignupDto) => {
 };
 
 export const signupPlayer = async (signupDto: SignupDto) => {
-  return await authentication.signupPlayer(prepareSignupPlayer(signupDto));
+  return authentication.signupPlayer(prepareSignupPlayer(signupDto));
 };
 
 export const prepareJwt = (bearerToken: string) =>
