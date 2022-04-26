@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyJwt } from "../../sevices/authentication.service";
+import { playerHasWallet } from "../../sevices/player.service";
 
 interface TokenPayload {
   playerId: string;
 }
+
 export const authMiddleware = (
   req: Request<never, never, TokenPayload>,
   res: Response,
@@ -19,3 +21,12 @@ export const authMiddleware = (
     res.send({ message: "unauthorized" });
   }
 };
+
+export const authPlayersWallet = (req: Request<any, any, any>, res: Response, next: NextFunction) => {
+  playerHasWallet(req.body.playerId, req.params.walletId)
+    .then(next)
+    .catch((error) => {
+      res.status(400);
+      res.send({message: error.message})
+    });
+}

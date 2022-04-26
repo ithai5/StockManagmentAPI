@@ -1,12 +1,37 @@
-import { Router } from "express";
-import { getAllWalletsForPlayer, getWallet, getWalletStocks } from "../sevices/wallet.service";
+import { Request, Response, Router } from "express";
+import { getWallet } from "../sevices/wallet.service";
 import { isNumberRegex } from "../utils/input-checks";
+import { walletStockRoutes } from "./wallet-stocks/index.wallet-stock.route";
 
 export const walletRoutes = Router();
 
-// TODO: Add Swagger docs for these api endpoints 
+walletRoutes.use("/stock", walletStockRoutes);
 
-walletRoutes.get("/:walletId", (req, res) => {
+/**
+ * @swagger
+ * /wallet/{walletId}:
+ *  get:
+ *    security:
+ *      - bearerAuth: []
+ *    summary: Get wallet with walletId
+ *    tags: [wallet]
+ *    parameters:
+ *        - in: path
+ *          name: walletId
+ *          type: string
+ *          required: true
+ *          description: id of the wallet
+ *    responses:
+ *      401:
+ *        description: The player failed to login
+ *      200:
+ *        description: The player is logged in and has wallets associated with their account
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/WalletResponse'
+ */
+walletRoutes.get("/:walletId", (req: Request, res: Response) => {
   if(isNumberRegex(req.params.walletId)){
     const walletId: number = +req.params.walletId;
     getWallet(walletId)
@@ -20,35 +45,3 @@ walletRoutes.get("/:walletId", (req, res) => {
     res.send({error: 'Id is not a number'});
   }
 });
-
-walletRoutes.get("/player-wallets/:playerId", (req, res) => {
-  if(isNumberRegex(req.params.playerId)){
-    const playerId: number = +req.params.playerId;
-    getAllWalletsForPlayer(playerId)
-      .then((data) => {
-        res.json({playerWallets: data});
-      })
-      .catch((error: Error) => {
-        throw error;
-      });
-  } else {
-    res.send({error: 'Id is not a number'});
-  }
-});
-
-walletRoutes.get("/stocks-owned/:walletId", (req, res) => {
-  // First check the input id from the params.
-  if(isNumberRegex(req.params.walletId)){
-    const walletId: number = +req.params.walletId;
-    getWalletStocks(walletId)
-      .then((data) => {
-        res.json({walletStocks: data});
-      })
-      .catch((error: Error) => {
-        throw error;
-      });
-  } else {
-    res.send({error: 'Id is not a number'});
-  }
-});
-

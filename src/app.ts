@@ -6,6 +6,8 @@ import cors from "cors";
 // ----------------- Routes -----------------
 import { auth } from "./routes/auth.route";
 import { walletRoutes } from "./routes/wallet.route";
+import { authMiddleware, authPlayersWallet } from "./middlewares/authorization/auth.middleware";
+import { playerRoutes } from "./routes/player.route";
 
 const PORT = process.env.APP_PORT || 4200;
 
@@ -15,7 +17,8 @@ app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use("/authorization", auth);
-app.use("/wallet", walletRoutes);
+app.use("/wallet", [authMiddleware, authPlayersWallet], walletRoutes);
+app.use("/player", [authMiddleware], playerRoutes);
 
 app.get("/", (_req, res) => {
   res.redirect("/api-docs");
