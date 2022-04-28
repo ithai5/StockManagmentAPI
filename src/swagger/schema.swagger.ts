@@ -81,5 +81,23 @@
  *        email: test@example.com
  *        phone: 3131313131
  *        password: abcd1234xyz!
+ *    PlayerWalletResponse:
+ *      type: object
+ *      properties:
+ *        playerWallets:
+ *          type: object
+ *          description: an array of wallets for the player logged in of type WalletDto
+ *    WalletResponse:
+ *      type: object
+ *      properties:
+ *        wallet:
+ *          type: object
+ *          description: single WalletDto
+ *    WalletStockResponse:
+ *      type: object
+ *      properties:
+ *        wallet:
+ *          type: object
+ *          description: StockValue array
  *
  * */
