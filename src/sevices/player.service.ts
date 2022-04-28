@@ -1,28 +1,24 @@
 import { WalletDto } from "../models/dto/wallet.dto";
-import { InterfacePlayerRepository } from "../repositories/interface-player.repository";
-import { InterfaceRepository } from "../repositories/interface-repository";
-import { PlayerMysqlRepository } from "../repositories/mysql/player.mysql.repository";
 import { switchSelectRepository } from "./repository.service";
+import { Databases } from "../global/database-control";
 
-
-const repositories: InterfaceRepository = {
-  MySQL: PlayerMysqlRepository,
-  MongoDB: undefined,
-  Neo4j: undefined
-}
-
-const playerRepository: InterfacePlayerRepository = switchSelectRepository(repositories, repositories.MySQL);
+const { Player } = switchSelectRepository(Databases.MySQL);
 
 /**
  * Gets all wallets of a player
- * 
- * @param playerId 
+ *
+ * @param playerId
  * @returns WalletDto[] :: with fields (nickname, balance)
  */
- export const getAllWalletsForPlayer = async (playerId: number): Promise<WalletDto[] | Error> => {
-  return playerRepository.getAllWalletsForPlayer(playerId);
-}
+export const getAllWalletsForPlayer = async (
+  playerId: number
+): Promise<WalletDto[] | Error> => {
+  return Player.getAllWalletsForPlayer(playerId);
+};
 
-export const playerHasWallet = (playerId: number, walletId: number): Promise<boolean | Error> => {
-  return playerRepository.playerHasWallet(playerId, walletId);
-}
+export const playerHasWallet = (
+  playerId: number,
+  walletId: number
+): Promise<boolean | Error> => {
+  return Player.playerHasWallet(playerId, walletId);
+};
