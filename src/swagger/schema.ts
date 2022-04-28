@@ -31,7 +31,7 @@
  *        email: user@example.com
  *        password: "123456789"
  *        phone: "004531000000"
- *        name: finnhubService user
+ *        name:  user name
  *    LoginResponse:
  *      type: object
  *      properties:
@@ -78,7 +78,7 @@
  *      example:
  *        playerId: 100
  *        name: John Doe
- *        email: finnhubService@example.com
+ *        email: user@example.com
  *        phone: 3131313131
  *        password: abcd1234xyz!
  *
