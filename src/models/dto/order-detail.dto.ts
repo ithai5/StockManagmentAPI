@@ -1,7 +1,7 @@
 export interface OrderDetail {
-  StockTicker: string;
+  stockTicker: string;
   amount: number;
-  pricePerStock: number;
+  pricePerStock: number | null;
   date: Date;
-  balanceRemaining: number;
+  balanceRemaining?: number;
 }

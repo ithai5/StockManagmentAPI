@@ -25,6 +25,7 @@ export const REPOSITORIES: InterfaceRepository = {
     WalletStock: WalletStockMysqlRepository,
     Order: OrderMysqlRepository,
     Stock: StockMysqlRepository,
+
   },
   MongoDB: undefined,
   Neo4j: undefined,

@@ -22,7 +22,7 @@ app.use("/authorization", auth);
 app.use("/wallet", [authMiddleware], walletRoutes);
 app.use("/player", [authMiddleware], playerRoutes);
 app.use("/order", [authMiddleware], orderRoutes);
-app.use("/stock", stockRoutes);
+app.use("/stock", [authMiddleware], stockRoutes);
 
 app.get("/", (_req, res) => {
   res.redirect("/api-docs");

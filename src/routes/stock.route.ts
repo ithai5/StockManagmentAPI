@@ -26,7 +26,6 @@ export const stockRoutes = Router();
  *              $ref: '#/components/schemas/StockTickerResponse'
  */
 stockRoutes.get("/:ticker", (req, res) => {
-  console.log("hello", req.params.ticker);
   getStock(req.params.ticker)
     .then((response) => {
       res.send({ stock: response });

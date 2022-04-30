@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { authPlayersWallet } from "../middlewares/authorization/auth.middleware";
+import {placeOrderForWallet} from "../sevices/order.service";
 
 export const orderRoutes = Router();
 
@@ -22,12 +23,26 @@ export const orderRoutes = Router();
  *        application/json:
  *          schema:
  *            $ref: '#/components/schemas/OrderRequest'
+ *    responses:
+ *      401:
+ *        description: The players is unauthorized
+ *      201:
+ *        description: order has been completed
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/OrderResponse'
+ *
+ *
  *
  */
 orderRoutes.post("/trade/:walletId", authPlayersWallet, (req, res) => {
-  /*
-  const { ticker,amount } = req.body;
+  const { ticker,amount, orderType } = req.body;
   const walletId = req.params.walletId;
-*/
-  res.send({ message: "hello world" });
+  placeOrderForWallet({orderType, walletId: +walletId, ticker: ticker.toUpperCase(), amount}).then(response => {
+    res.send(response)
+  }).catch(error => {
+    res.status(400)
+    res.send({message: error.message})
+  })
 });

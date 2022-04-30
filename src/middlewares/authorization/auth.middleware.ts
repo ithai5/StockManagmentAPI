@@ -28,7 +28,9 @@ export const authPlayersWallet = (
   next: NextFunction
 ) => {
   playerHasWallet(req.body.playerId, +req.params.walletId)
-    .then(next)
+    .then(() => {
+      next()
+    })
     .catch((error) => {
       res.status(400);
       res.send({ message: error.message });
