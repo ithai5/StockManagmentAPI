@@ -7,7 +7,7 @@ import {
 /**
  * Selects which repository to use based on the current database.
  *
- * @returns The implemented repository for the current database.
+ * @returns Mysql, MongoDB or Neo4j object with their corresponding repositories
  * @param databases
  */
 export function switchSelectRepository(
