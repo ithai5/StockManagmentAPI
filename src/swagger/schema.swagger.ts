@@ -99,5 +99,39 @@
  *        wallet:
  *          type: object
  *          description: StockValue array
+ *    OrderRequest:
+ *      type: object
+ *      properties:
+ *        ticker:
+ *          type: string
+ *          description: ticker that represent a company in the stock market
+ *        amount:
+ *          type: number
+ *          description: amount of stocks that the wallet would like to purchase
+ *    StockTickerResponse:
+ *      type: object
+ *      properties:
+ *        currentPrice:
+ *          type: number
+ *          description: current stock price
+ *        stockTicker:
+ *          type: string
+ *          description: company ticker symbol
+ *        lastUpdated:
+ *          type: date
+ *          description: last time that the price updated
+ *        name:
+ *          type: string
+ *          description: company name
+ *        percentChange:
+ *          type: number
+ *          description: the change of the price in percentage for the day
+ *        description:
+ *          type: string
+ *          description: describe the company in few words
+ *
+ *
+ *
+ *
  *
  * */

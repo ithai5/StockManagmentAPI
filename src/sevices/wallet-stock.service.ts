@@ -1,4 +1,4 @@
-import { StockValue } from "../models/dto/wallet.dto";
+import { WalletStockValue } from "../models/dto/wallet.dto";
 import { switchSelectRepository } from "./repository.service";
 import { Databases } from "../global/database-control";
 
@@ -13,6 +13,6 @@ const { WalletStock } = switchSelectRepository(Databases.MySQL);
  */
 export const getWalletStocks = async (
   walletId: number
-): Promise<StockValue[]> => {
+): Promise<WalletStockValue[]> => {
   return WalletStock.getWalletStocks(walletId);
 };

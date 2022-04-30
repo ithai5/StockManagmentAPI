@@ -20,5 +20,6 @@ export const playerHasWallet = (
   playerId: number,
   walletId: number
 ): Promise<boolean | Error> => {
+  console.log(playerId, walletId);
   return Player.playerHasWallet(playerId, walletId);
 };

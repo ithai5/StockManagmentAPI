@@ -1,7 +1,9 @@
 import { prismaMySql } from "../../database-connection/mysql.database-connection";
-import { StockValue, StockValueSelect } from "../../models/dto/wallet.dto";
+import {
+  WalletStockValue,
+  walletStockValueSelect,
+} from "../../models/dto/wallet.dto";
 import { InterfaceWalletStockRepository } from "../interface-wallet-stock.repository";
-
 
 export const WalletStockMysqlRepository: InterfaceWalletStockRepository = {
   async getWalletStocks(walletId) {
@@ -9,10 +11,10 @@ export const WalletStockMysqlRepository: InterfaceWalletStockRepository = {
       where: {
         fkWalletId: walletId,
       },
-      select: StockValueSelect
+      select: walletStockValueSelect,
     });
     return queryResult.map((result) => {
-      const stockValue: StockValue = {
+      const stockValue: WalletStockValue = {
         stockTicker: result.fkStockTicker,
         stockShares: result.stockShares,
         avgPrice: result.avgPrice,
@@ -20,4 +22,4 @@ export const WalletStockMysqlRepository: InterfaceWalletStockRepository = {
       return stockValue;
     });
   },
-}
+};

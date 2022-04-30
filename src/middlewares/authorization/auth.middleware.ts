@@ -22,11 +22,15 @@ export const authMiddleware = (
   }
 };
 
-export const authPlayersWallet = (req: Request<any, any, any>, res: Response, next: NextFunction) => {
-  playerHasWallet(req.body.playerId, req.params.walletId)
+export const authPlayersWallet = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  playerHasWallet(req.body.playerId, +req.params.walletId)
     .then(next)
     .catch((error) => {
       res.status(400);
-      res.send({message: error.message})
+      res.send({ message: error.message });
     });
-}
+};
