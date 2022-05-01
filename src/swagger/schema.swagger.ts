@@ -99,5 +99,59 @@
  *        wallet:
  *          type: object
  *          description: StockValue array
+ *    OrderRequest:
+ *      type: object
+ *      properties:
+ *        ticker:
+ *          type: string
+ *          description: ticker that represent a company in the stock market
+ *        amount:
+ *          type: number
+ *          description: amount of stocks that the wallet would like to purchase
+ *        orderType:
+ *          type: string
+ *          enum:
+ *              - SELL
+ *              - BUY
+ *
+ *    StockTickerResponse:
+ *      type: object
+ *      properties:
+ *        currentPrice:
+ *          type: number
+ *          description: current stock price
+ *        stockTicker:
+ *          type: string
+ *          description: company ticker symbol
+ *        lastUpdated:
+ *          type: date
+ *          description: last time that the price updated
+ *        name:
+ *          type: string
+ *          description: company name
+ *        percentChange:
+ *          type: number
+ *          description: the change of the price in percentage for the day
+ *        description:
+ *          type: string
+ *          description: describe the company in few words
+ *    OrderResponse:
+ *      type: object
+ *      properties:
+ *          stockTicker:
+ *            type: string
+ *            description: which stock the player the player ordered
+ *          amount:
+ *            type: number
+ *            description: how many stocks the player order
+ *          pricePerStock:
+ *            type: number
+ *            description: the price for a single stock in that order
+ *          date:
+ *            type: Date
+ *            description: the time that the order took apart in
+ *          balanceRemaining:
+ *            type: number
+ *            description: the amount of money that is in the wallet after the order
  *
  * */
