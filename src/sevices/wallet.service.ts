@@ -1,9 +1,9 @@
 import { WalletDto } from "../models/dto/wallet.dto";
-import { switchSelectRepository } from "./repository.service";
+import { switchSelectDatabaseService } from "./repository.service";
 import { Databases } from "../global/database-control";
 
 // Assigning the correct repository
-const { Wallet } = switchSelectRepository(Databases.MySQL);
+const { Wallet } = switchSelectDatabaseService(Databases.MySQL);
 
 /**
  * Get a single wallet
