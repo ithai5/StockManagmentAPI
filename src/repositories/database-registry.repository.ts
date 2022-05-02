@@ -1,30 +1,32 @@
-import { InterfacePlayerRepository } from "./interface-player.repository";
-import { InterfaceWalletRepository } from "./interface-wallet.repository";
-import { InterfaceWalletStockRepository } from "./interface-wallet-stock.repository";
-import { InterfaceRepository } from "./interface-repository";
-import { PlayerMysqlRepository } from "./mysql/player.mysql.repository";
-import { WalletMysqlRepository } from "./mysql/wallet.mysql.repository";
-import { WalletStockMysqlRepository } from "./mysql/wallet-stock.mysql.repository";
-import { InterfaceOrderRepository } from "./interface-order.repository";
-import { OrderMysqlRepository } from "./mysql/order.mysql.repository";
-import { InterfaceStockRepository } from "./interface-stock.repository";
-import { StockMysqlRepository } from "./mysql/stock.mysql.repository";
+import { InterfaceDatabaseService } from "./interface-database-service";
+import {InterfacePlayerDatabaseService, playerMysqlService} from "../database-service/interface-player-database.service";
+import {
+  InterfaceWalletDatabaseService,
+  walletMysqlService
+} from "../database-service/interface-wallet-database.service";
+import {
+  InterfaceWalletStockDatabaseService,
+  walletStockMysqlService
+} from "../database-service/interface-wallet-stock-database.service";
+import {InterfaceStockDatabaseService, StockMysqlService} from "../database-service/interface-stock-database.service";
+import {InterfaceOrderDatabaseService, orderMysqlService} from "../database-service/interface-order-database.service";
 
-export interface DatabaseRepository {
-  Player: InterfacePlayerRepository;
-  Wallet: InterfaceWalletRepository;
-  WalletStock: InterfaceWalletStockRepository;
-  Order: InterfaceOrderRepository;
-  Stock: InterfaceStockRepository;
+export interface DatabaseService {
+  Player: InterfacePlayerDatabaseService;
+  Wallet: InterfaceWalletDatabaseService;
+  WalletStock: InterfaceWalletStockDatabaseService;
+  Order: InterfaceOrderDatabaseService;
+  Stock: InterfaceStockDatabaseService;
 }
 
-export const REPOSITORIES: InterfaceRepository = {
+export const SERVICES: InterfaceDatabaseService = {
   MySQL: {
-    Player: PlayerMysqlRepository,
-    Wallet: WalletMysqlRepository,
-    WalletStock: WalletStockMysqlRepository,
-    Order: OrderMysqlRepository,
-    Stock: StockMysqlRepository,
+    Player: playerMysqlService,
+    Wallet: walletMysqlService,
+    WalletStock: walletStockMysqlService,
+    Stock: StockMysqlService,
+    Order: orderMysqlService,
+
 
   },
   MongoDB: undefined,

@@ -1,7 +1,7 @@
 import { Databases } from "../global/database-control";
 import {
-  DatabaseRepository,
-  REPOSITORIES,
+  DatabaseService,
+  SERVICES,
 } from "../repositories/database-registry.repository";
 
 /**
@@ -12,10 +12,10 @@ import {
  */
 export function switchSelectRepository(
   databases: Databases
-): DatabaseRepository {
+): DatabaseService {
   switch (databases) {
     case Databases.MySQL:
-      return REPOSITORIES.MySQL;
+      return SERVICES.MySQL;
     case Databases.MongoDB:
     // Note: Not implemented yet
     // return repositories.MongoDB;
