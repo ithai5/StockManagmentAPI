@@ -8,7 +8,7 @@ import {
   InterfaceWalletStockDatabaseService,
   walletStockMysqlService
 } from "../database-service/interface-wallet-stock-database.service";
-import {InterfaceStockDatabaseService, StockMysqlService} from "../database-service/interface-stock-database.service";
+import {InterfaceStockDatabaseService, stockMysqlService} from "../database-service/interface-stock-database.service";
 import {InterfaceOrderDatabaseService, orderMysqlService} from "../database-service/interface-order-database.service";
 
 export interface DatabaseService {
@@ -24,7 +24,7 @@ export const SERVICES: InterfaceDatabaseService = {
     Player: playerMysqlService,
     Wallet: walletMysqlService,
     WalletStock: walletStockMysqlService,
-    Stock: StockMysqlService,
+    Stock: stockMysqlService,
     Order: orderMysqlService,
 
 

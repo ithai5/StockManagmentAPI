@@ -1,9 +1,9 @@
 import { WalletStockValue } from "../models/dto/wallet.dto";
-import { switchSelectRepository } from "./repository.service";
+import { switchSelectDatabaseService } from "./repository.service";
 import { Databases } from "../global/database-control";
 
 // Assigning the correct repository
-const { WalletStock } = switchSelectRepository(Databases.MySQL);
+const { WalletStock } = switchSelectDatabaseService(Databases.MySQL);
 
 /**
  * Get Stocks owned in the wallet

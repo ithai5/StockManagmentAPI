@@ -10,7 +10,7 @@ import {
  * @returns Mysql, MongoDB or Neo4j object with their corresponding repositories
  * @param databases
  */
-export function switchSelectRepository(
+export function switchSelectDatabaseService(
   databases: Databases
 ): DatabaseService {
   switch (databases) {

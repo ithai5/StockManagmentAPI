@@ -5,7 +5,7 @@ export interface InterfaceStockDatabaseService {
     getStock: (stockTicker: string) => Promise<StockValue>
 }
 
-export const StockMysqlService: InterfaceStockDatabaseService = {
+export const stockMysqlService: InterfaceStockDatabaseService = {
     getStock: async (stockTicker: string) => {
         const stock = await StockMysqlRepository.getStock(stockTicker)
         if (stock) return stock;

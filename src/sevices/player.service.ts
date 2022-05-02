@@ -1,8 +1,8 @@
 import { WalletDto } from "../models/dto/wallet.dto";
-import { switchSelectRepository } from "./repository.service";
+import { switchSelectDatabaseService } from "./repository.service";
 import { Databases } from "../global/database-control";
 
-const { Player } = switchSelectRepository(Databases.MySQL);
+const { Player } = switchSelectDatabaseService(Databases.MySQL);
 
 /**
  * Gets all wallets of a player
