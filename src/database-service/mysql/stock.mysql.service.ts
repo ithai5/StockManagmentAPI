@@ -1,9 +1,5 @@
-import {StockMysqlRepository} from "../repositories/mysql/stock.mysql.repository";
-import {StockValue} from "../models/dto/stock-value.dto";
-
-export interface InterfaceStockDatabaseService {
-    getStock: (stockTicker: string) => Promise<StockValue>
-}
+import {StockMysqlRepository} from "../../repositories/mysql/stock.mysql.repository";
+import {InterfaceStockDatabaseService} from "../interface-stock.database-service";
 
 export const stockMysqlService: InterfaceStockDatabaseService = {
     getStock: async (stockTicker: string) => {
