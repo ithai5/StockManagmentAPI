@@ -12,7 +12,6 @@ import { orderRoutes } from "./routes/order.route";
 import { stockRoutes } from "./routes/stock.route";
 
 const PORT = process.env.APP_PORT || 4200;
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -26,6 +25,10 @@ app.use("/stock", stockRoutes); //maybe add an authMiddleware
 
 app.get("/", (_req, res) => {
   res.redirect("/api-docs");
+});
+
+app.get("/call", (req, res) => {
+  res.send({ message: "hello there" });
 });
 
 app.listen(PORT, () => {
