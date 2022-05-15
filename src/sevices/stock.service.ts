@@ -6,7 +6,6 @@ import { finnhubApi } from "./api/finnhubConnection";
 const { Stock } = switchSelectDatabaseService(Databases.MySQL);
 
 export const getStock = async (stockTicker: string): Promise<StockValue> => {
-  //catch stock ticker not found
   try {
     const cacheStockValue = await Stock.getStock(stockTicker);
     const oldestAcceptedUpdateStock = new Date(
@@ -22,7 +21,6 @@ export const getStock = async (stockTicker: string): Promise<StockValue> => {
       );
       //assuming that a stock value cannot be free
       if (stockFromFinnhub.data.c) {
-        //check if stock exist
         const createNewStock: StockValue = {
           currentPrice: stockFromFinnhub.data.c,
           description: "",
@@ -31,15 +29,12 @@ export const getStock = async (stockTicker: string): Promise<StockValue> => {
           percentageChange: stockFromFinnhub.data.dp,
           stockTicker: stockTicker,
         };
-        //save to db
         await Stock.createStock(createNewStock);
       } else {
         throw Error("stock Ticker does not exist in the system");
       }
     }
   }
-
-  //execute
   const updateResult = await updateCurrentStockValue(stockTicker);
   if (updateResult) {
     return getStock(stockTicker);
