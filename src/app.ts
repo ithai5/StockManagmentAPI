@@ -27,10 +27,6 @@ app.get("/", (_req, res) => {
   res.redirect("/api-docs");
 });
 
-app.get("/call", (req, res) => {
-  res.send({ message: "hello there" });
-});
-
 app.listen(PORT, () => {
   console.log("Application is running on port: ", PORT);
 });
