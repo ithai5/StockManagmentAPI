@@ -12,7 +12,6 @@ import { orderRoutes } from "./routes/order.route";
 import { stockRoutes } from "./routes/stock.route";
 
 const PORT = process.env.APP_PORT || 4200;
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -22,7 +21,7 @@ app.use("/authorization", auth);
 app.use("/wallet", [authMiddleware], walletRoutes);
 app.use("/player", [authMiddleware], playerRoutes);
 app.use("/order", [authMiddleware], orderRoutes);
-app.use("/stock", [authMiddleware], stockRoutes);
+app.use("/stock", stockRoutes); //maybe add an authMiddleware
 
 app.get("/", (_req, res) => {
   res.redirect("/api-docs");

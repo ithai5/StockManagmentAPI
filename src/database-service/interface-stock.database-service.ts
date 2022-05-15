@@ -1,6 +1,7 @@
-import {StockValue} from "../models/dto/stock-value.dto";
+import { StockValue } from "../models/dto/stock-value.dto";
 
 export interface InterfaceStockDatabaseService {
-    getStock: (stockTicker: string) => Promise<StockValue>
+  getStock: (stockTicker: string) => Promise<StockValue>;
+  updateStock: (currentStockValue: StockValue) => Promise<StockValue>;
+  createStock: (stockValue: StockValue) => Promise<StockValue>;
 }
-
