@@ -1,15 +1,17 @@
 import { InterfaceOrderRepository } from "../interface-order.repository";
-import {OrderRequest} from "../../models/order-request";
-import {prismaMySql} from "../../database-connection/mysql.database-connection";
-import {Prisma} from "@prisma/client";
+import { OrderRequest } from "../../models/order-request";
+import { prismaMySql } from "../../database-connection/mysql.database-connection";
+import { Prisma } from "@prisma/client";
 
 export const OrderMysqlRepository: InterfaceOrderRepository = {
-  placeOrder(orderRequest: OrderRequest, currentPrice: number ) {
-      prismaMySql.$executeRaw(Prisma.sql`CALL safe_order_transaction (
+  placeOrder(orderRequest: OrderRequest, currentPrice: number) {
+    console.log("orderRequest: ", orderRequest);
+    console.log("currentPrice: ", currentPrice);
+    prismaMySql.$executeRaw(Prisma.sql`CALL safe_order_transaction (
                           ${orderRequest.orderType},
                           ${orderRequest.ticker},
                           ${orderRequest.walletId},
                           ${orderRequest.amount},
-                          ${currentPrice})`)
-  }
+                          ${currentPrice});`);
+  },
 };
