@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+// Temp mongodb url while testing
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL_MONGODB2")
+}
+
+
+model player {
+  playerId String @id @default(auto()) @map("_id") @db.ObjectId
+  name String 
+  email String @unique
+  phone String @unique
+  password String
+  wallets wallet[]
+}
+
+model wallet {
+  walletId String @id @default(auto()) @map("_id") @db.ObjectId
+  player player @relation(fields: [fkPlayerId], references: [playerId])
+  fkPlayerId String @db.ObjectId
+  nickname String
+  balance Float
+  created DateTime
+  stocks walletHasStock[]
+  orders order[]
+	transfersFrom transferFrom[]
+	transfersTo transferTo[]
+}
+
+type order {
+  stockTicker String
+  stockPrice Float
+  stockShares Float
+  date DateTime
+  type order_type
+}
+
+model stock {
+  stockId String @id @default(auto()) @map("_id") @db.ObjectId
+  stockTicker String @unique
+  name String
+  description String?
+  currentPrice Float?
+  percentChange Float?
+  lastUpdated DateTime
+}
+
+type walletHasStock {
+  stockTicker String
+  avgPrice Float
+  stockShares Float
+}
+
+type transferFrom {
+  walletFrom String @db.ObjectId
+  date DateTime
+  amount Float
+}
+
+type transferTo {
+	walletTo String @db.ObjectId
+	date DateTime
+	amount Float
+}
+
+
+enum order_type {
+  BUY
+  SELL
+}
