@@ -7,9 +7,10 @@ import { InterfaceWalletStockRepository } from "../interface-wallet-stock.reposi
 
 export const WalletStockMysqlRepository: InterfaceWalletStockRepository = {
   async getWalletStocks(walletId) {
+		const walletIdNumber: number = +walletId;
     const queryResult = await prismaMySql.walletHasStock.findMany({
       where: {
-        fkWalletId: walletId,
+        fkWalletId: walletIdNumber,
       },
       select: walletStockValueSelect,
     });
