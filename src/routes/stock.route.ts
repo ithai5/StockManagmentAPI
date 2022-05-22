@@ -28,10 +28,14 @@ export const stockRoutes = Router();
 stockRoutes.get("/:ticker", (req, res) => {
   getStock(req.params.ticker)
     .then((response) => {
-      res.send({ stock: response });
+			if(response){
+				res.send({ stock: response });
+			} else {
+				res.status(404).send({error: 404, message: "Couldn't find stock ticker"});
+			}
     })
     .catch((error) => {
-      res.status(404);
-      res.send(error);
+			console.log("Error in fetching stock with ticker: ", error);
+      res.status(404).send(error);
     });
 });
