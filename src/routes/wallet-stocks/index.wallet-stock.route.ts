@@ -31,23 +31,20 @@ export const walletStockRoutes = Router();
  *              $ref: '#/components/schemas/WalletStockResponse'
  */
  walletStockRoutes.get("/:walletId", authPlayersWallet, (req, res) => {
-  if(isNumberRegex(req.params.walletId)){
-    const walletId: string = req.params.walletId;
-    getWalletStocks(walletId)
-      .then((data) => {
-				if(data){
-					res.json({walletStocks: data});
-				} else {
-					// TODO: Decide on the following comment:
-					// Should perhaps just be sending empty data rather than an error!
-					res.status(404).send({error: 404, message: "Wallets stocks not found"});
-				}
-      })
-      .catch((error: Error) => {
-				console.log("Error in wallet stocks route: ", error);
-        res.status(400).send({error: 400, message: "Couldn't handle request for wallets stock"});
-      });
-  } else {
-    res.send({error: 'Id is not a number'});
+	const walletId: string = req.params.walletId;
+	getWalletStocks(walletId)
+		.then((data) => {
+			if(data){
+				res.json({walletStocks: data});
+			} else {
+				// TODO: Decide on the following comment:
+				// Should perhaps just be sending empty data rather than an error!
+				res.status(404).send({error: 404, message: "Wallets stocks not found"});
+			}
+		})
+		.catch((error: Error) => {
+			console.log("Error in wallet stocks route: ", error);
+			res.status(400).send({error: 400, message: "Couldn't handle request for wallets stock"});
+		});
   }
-});
+);

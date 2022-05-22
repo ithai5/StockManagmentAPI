@@ -1,5 +1,5 @@
 export interface PlayerDto {
-  playerId: number;
+  playerId: string;
   name: string;
   email: string;
   phone: string;

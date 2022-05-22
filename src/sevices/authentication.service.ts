@@ -5,6 +5,7 @@ import { InterfaceAuthentication } from "../repositories/interface-authenticatio
 import jsonwebtoken, { SignOptions } from "jsonwebtoken";
 import "dotenv/config";
 import { SignupDto } from "../models/dto/signup.dto";
+import { authenticationMongodb } from "../repositories/mongodb/authentication.mongodb.repository";
 
 
 export async function getPlayerDtoByEmail(email: string): Promise<PlayerDto> {
@@ -58,4 +59,4 @@ export const prepareJwt = (bearerToken: string) =>
   bearerToken.replace(/^Bearer\s+/, "");
 
 // should be able to change it to any db connection that implement the Authentication interface
-const authentication: InterfaceAuthentication = authenticationMySql;
+const authentication: InterfaceAuthentication = authenticationMongodb;

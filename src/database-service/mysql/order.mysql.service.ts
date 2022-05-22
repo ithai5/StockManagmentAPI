@@ -5,7 +5,7 @@ import {walletMysqlService} from "./wallet.mysql.service";
 
 export const orderMysqlService: InterfaceOrderDatabaseService = {
 		createOrder: async (orderRequest: OrderRequest, currentPrice: number) => {
-			const orderCreated = await OrderMysqlRepository.placeOrder(orderRequest, currentPrice); // Todo: get results here
+			const orderCreated = await OrderMysqlRepository.placeOrder(orderRequest, currentPrice);
 			if(!orderCreated){
 				console.log("Order Mysql service, orderCreated is null or undefined!");
 				return null;

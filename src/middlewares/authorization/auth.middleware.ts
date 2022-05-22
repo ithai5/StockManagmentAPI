@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyJwt } from "../../sevices/authentication.service";
 import { playerHasWallet } from "../../sevices/player.service";
-import { isNumberRegex } from "../../utils/input-checks";
 
 interface TokenPayload {
   playerId: string;
@@ -28,9 +27,6 @@ export const authPlayersWallet = (
   res: Response,
   next: NextFunction
 ) => {
-	if(!isNumberRegex(req.params.walletId)){
-		return res.status(400).send({ error: 400, message: "Id is not a number" });
-	}
   playerHasWallet(req.body.playerId, req.params.walletId)
     .then((wallet) => {
 			if(wallet) {

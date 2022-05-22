@@ -6,6 +6,6 @@ import { DatabaseService } from "./database-registry.repository";
 // NOTE: Where to put this one
 export interface InterfaceDatabaseService {
   MySQL: DatabaseService;
-  MongoDB: unknown;
+  MongoDB: DatabaseService;
   Neo4j: unknown;
 }

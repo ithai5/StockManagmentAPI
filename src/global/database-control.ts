@@ -4,4 +4,4 @@ export enum Databases {
   Neo4j = "Neo4j",
 }
 
-export const currentDatabase = Databases.MySQL;
+export const currentDatabase = Databases.MongoDB;

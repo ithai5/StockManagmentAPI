@@ -4,13 +4,20 @@ import { prismaMySql } from "../../database-connection/mysql.database-connection
 import { SignupDto } from "../../models/dto/signup.dto";
 
 export const authenticationMySql: InterfaceAuthentication = {
-  signupPlayer(signupDto: SignupDto): Promise<PlayerDto> {
-    return prismaMySql.player.create({ data: signupDto }).catch((reason) => {
+  async signupPlayer(signupDto: SignupDto): Promise<PlayerDto | null> {
+    const player = await prismaMySql.player.create({ data: signupDto }).catch((reason) => {
       throw Error(reason);
     });
+		return player ? {
+			playerId: player.playerId.toString(),
+			name: player.name,
+			email: player.email,
+			phone: player.phone,
+			password: player.password
+		} : null;
   },
-  loginPlayer(email: string): Promise<PlayerDto | null> {
-    return prismaMySql.player
+  async loginPlayer(email: string): Promise<PlayerDto | null> {
+    const player = await prismaMySql.player
       .findUnique({
         where: {
           email: email,
@@ -19,5 +26,12 @@ export const authenticationMySql: InterfaceAuthentication = {
       .catch((reason) => {
         throw Error(reason);
       });
-  },
+			return player ? {
+				playerId: player.playerId.toString(),
+				name: player.name,
+				email: player.email,
+				phone: player.phone,
+				password: player.password
+			} : null;
+		},
 };
