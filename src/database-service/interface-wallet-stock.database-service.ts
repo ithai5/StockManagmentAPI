@@ -2,6 +2,6 @@ import {WalletStockValue} from "../models/dto/wallet.dto";
 
 
 export interface InterfaceWalletStockDatabaseService{
-    getWalletStocks: (walletId: number) => Promise<WalletStockValue[]>
+    getWalletStocks: (walletId: string) => Promise<WalletStockValue[] | null>
 }
 
