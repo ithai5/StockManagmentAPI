@@ -3,7 +3,7 @@ import { InterfaceStockDatabaseService } from "../interface-stock.database-servi
 import { StockValue } from "../../models/dto/stock-value.dto";
 
 export const stockMysqlService: InterfaceStockDatabaseService = {
-  createStock(stockValue: StockValue): Promise<StockValue> {
+  createStock(stockValue: StockValue): Promise<StockValue | null> {
     return StockMysqlRepository.createStock(stockValue);
   },
   getStock: async (stockTicker: string) => {

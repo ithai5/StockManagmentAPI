@@ -1,9 +1,9 @@
 import { WalletDto } from "../models/dto/wallet.dto";
 import { switchSelectDatabaseService } from "./repository.service";
-import { Databases } from "../global/database-control";
+import { currentDatabase, Databases } from "../global/database-control";
 
 // Assigning the correct repository
-const { Wallet } = switchSelectDatabaseService(Databases.MySQL);
+const { Wallet } = switchSelectDatabaseService(currentDatabase);
 
 /**
  * Get a single wallet
@@ -11,8 +11,6 @@ const { Wallet } = switchSelectDatabaseService(Databases.MySQL);
  * @param walletId
  * @returns WalletDto :: with fields (nickname, balance)
  */
-export const getWallet = async (
-  walletId: number
-): Promise<WalletDto | Error> => {
+export const getWallet = async (walletId: string): Promise<WalletDto | null> => {
   return Wallet.getWallet(walletId);
 };

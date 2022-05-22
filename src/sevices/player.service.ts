@@ -1,8 +1,8 @@
 import { WalletDto } from "../models/dto/wallet.dto";
 import { switchSelectDatabaseService } from "./repository.service";
-import { Databases } from "../global/database-control";
+import { currentDatabase, Databases } from "../global/database-control";
 
-const { Player } = switchSelectDatabaseService(Databases.MySQL);
+const { Player } = switchSelectDatabaseService(currentDatabase);
 
 /**
  * Gets all wallets of a player
@@ -11,14 +11,14 @@ const { Player } = switchSelectDatabaseService(Databases.MySQL);
  * @returns WalletDto[] :: with fields (nickname, balance)
  */
 export const getAllWalletsForPlayer = async (
-  playerId: number
-): Promise<WalletDto[] | Error> => {
+  playerId: string
+): Promise<WalletDto[] | null> => {
   return Player.getAllWalletsForPlayer(playerId);
 };
 
 export const playerHasWallet = (
-  playerId: number,
-  walletId: number
-): Promise<boolean | Error> => {
+  playerId: string,
+  walletId: string
+): Promise<WalletDto | null> => {
   return Player.playerHasWallet(playerId, walletId);
 };

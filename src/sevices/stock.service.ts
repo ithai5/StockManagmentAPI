@@ -1,21 +1,24 @@
 import { switchSelectDatabaseService } from "./repository.service";
-import { Databases } from "../global/database-control";
+import { currentDatabase } from "../global/database-control";
 import { StockValue } from "../models/dto/stock-value.dto";
 import { finnhubApi } from "./api/finnhubConnection";
 
-const { Stock } = switchSelectDatabaseService(Databases.MySQL);
+const { Stock } = switchSelectDatabaseService(currentDatabase);
 
-export const getStock = async (stockTicker: string): Promise<StockValue> => {
-  try {
+export const getStock = async (stockTicker: string): Promise<StockValue | null> => {
+  
+	try {
     const cacheStockValue = await Stock.getStock(stockTicker);
+
     const oldestAcceptedUpdateStock = new Date(
       dateInUtc().setMinutes(dateInUtc().getMinutes() - 5)
     );
-    if (oldestAcceptedUpdateStock < cacheStockValue.lastUpdated!!) {
+
+    if (oldestAcceptedUpdateStock < cacheStockValue?.lastUpdated!) {
       return cacheStockValue;
     }
   } catch (error) {
-    if ((error as Error).message === "Stock ticker not found") {
+		if ((error as Error).message === "Stock ticker not found") {
       const stockFromFinnhub = await finnhubApi.quote(
         stockTicker.toUpperCase()
       );
@@ -33,7 +36,9 @@ export const getStock = async (stockTicker: string): Promise<StockValue> => {
       } else {
         throw Error("stock Ticker does not exist in the system");
       }
-    }
+    } else {
+			throw error;
+		}
   }
   const updateResult = await updateCurrentStockValue(stockTicker);
   if (updateResult) {
@@ -55,5 +60,5 @@ async function updateCurrentStockValue(stockTicker: string) {
     percentageChange: currentStockValue.data.dp,
     lastUpdated: dateInUtc(),
   }; // update db
-  return await Stock.updateStock(dataToUpdate);
+  return Stock.updateStock(dataToUpdate);
 }

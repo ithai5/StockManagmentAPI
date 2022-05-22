@@ -2,5 +2,5 @@ import {WalletStockMysqlRepository} from "../../repositories/mysql/wallet-stock.
 import {InterfaceWalletStockDatabaseService} from "../interface-wallet-stock.database-service";
 
 export const walletStockMysqlService: InterfaceWalletStockDatabaseService = {
-    getWalletStocks: (walletId: number) => WalletStockMysqlRepository.getWalletStocks(walletId)
+    getWalletStocks: (walletId: string) => WalletStockMysqlRepository.getWalletStocks(walletId)
 }
