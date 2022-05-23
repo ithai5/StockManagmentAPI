@@ -23,15 +23,15 @@ export const PlayerMongodbRepository: InterfacePlayerRepository = {
   },
   playerHasWallet: async (playerId: string, walletId: string): Promise<WalletDto | null> => {
     const wall = await prismaMongodb.wallet.findUnique({
-			where: {
-				walletId: walletId
-			},
-			select: {
-				fkPlayerId: true,
-				nickname: true,
-				balance: true
-			}
-		});
-		return wall?.fkPlayerId === playerId ? {nickname: wall.nickname, balance: wall.balance} : null;
-	}
+      where: {
+        walletId: walletId
+      },
+      select: {
+        fkPlayerId: true,
+        nickname: true,
+        balance: true
+      }
+    });
+    return wall?.fkPlayerId === playerId ? {nickname: wall.nickname, balance: wall.balance} : null;
+  }
 }
