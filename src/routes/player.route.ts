@@ -23,17 +23,17 @@ export const playerRoutes = Router();
  *              $ref: '#/components/schemas/PlayerWalletResponse'
  */
 playerRoutes.get("/wallets", (req, res) => {
-	getAllWalletsForPlayer(req.body.playerId)
-		.then((data) => {
-			if(data){
-				res.json({playerWallets: data});
-			} else {
-				res.status(400).send({error: 404, message: "No wallets found"})
-			}
-		})
-		.catch((error: Error) => {
-			console.log("Error in player routes: ", error);
-		});
+  getAllWalletsForPlayer(req.body.playerId)
+    .then((data) => {
+      if(data){
+        res.json({playerWallets: data});
+      } else {
+        res.status(400).send({error: 404, message: "No wallets found"})
+      }
+    })
+    .catch((error: Error) => {
+      console.log("Error in player routes: ", error);
+    });
 
-	}
+  }
 );

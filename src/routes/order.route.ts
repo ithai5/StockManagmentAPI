@@ -39,16 +39,15 @@ export const orderRoutes = Router();
 orderRoutes.post("/trade/:walletId", authPlayersWallet, (req, res) => {
   const { ticker,amount, orderType } = req.body;
   const walletId = req.params.walletId;
-	// TODO: Add input checks
   placeOrderForWallet({orderType, walletId: walletId, ticker: ticker.toUpperCase(), amount})
-		.then(response => {
-			if(response){
-				res.status(200).send(response)
-			} else {
-				res.status(400).send({error: 400, message: "Couldn't place order"});
-			}
-		}).catch(error => {
-			console.log("Error in placing order: ", error);
-			res.status(400).send({message: error.message}); // Send internal errors?
-		})
+    .then(response => {
+      if(response){
+        res.status(200).send(response)
+      } else {
+        res.status(400).send({error: 400, message: "Couldn't place order"});
+      }
+    }).catch(error => {
+      console.log("Error in placing order: ", error);
+      res.status(400).send({message: error.message}); // Send internal errors?
+    })
 });

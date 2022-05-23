@@ -36,11 +36,11 @@ export const SERVICES: InterfaceDatabaseService = {
     Order: orderMysqlService,
   },
   MongoDB: {
-		Player: playerMongodbService,
-		Wallet: walletMongodbService,
-		WalletStock: walletStockMongodbService,
-		Stock: stockMongodbService,
-		Order: orderMongodbService
-	},
+    Player: playerMongodbService,
+    Wallet: walletMongodbService,
+    WalletStock: walletStockMongodbService,
+    Stock: stockMongodbService,
+    Order: orderMongodbService
+  },
   Neo4j: undefined,
 };

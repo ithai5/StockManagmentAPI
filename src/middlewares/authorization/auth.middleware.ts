@@ -29,11 +29,11 @@ export const authPlayersWallet = (
 ) => {
   playerHasWallet(req.body.playerId, req.params.walletId)
     .then((wallet) => {
-			if(wallet) {
-				return next(); 
-			}
-			// Returning will override any other res.sends in caller
-			return res.status(403).send({ error: 403, message: "Not authorized" });
+      if(wallet) {
+        return next(); 
+      }
+      // Returning will override any other res.sends in caller
+      return res.status(403).send({ error: 403, message: "Not authorized" });
     })
     .catch((error) => {
       res.status(400);

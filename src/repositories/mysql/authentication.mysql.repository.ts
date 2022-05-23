@@ -8,13 +8,13 @@ export const authenticationMySql: InterfaceAuthentication = {
     const player = await prismaMySql.player.create({ data: signupDto }).catch((reason) => {
       throw Error(reason);
     });
-		return player ? {
-			playerId: player.playerId.toString(),
-			name: player.name,
-			email: player.email,
-			phone: player.phone,
-			password: player.password
-		} : null;
+    return player ? {
+      playerId: player.playerId.toString(),
+      name: player.name,
+      email: player.email,
+      phone: player.phone,
+      password: player.password
+    } : null;
   },
   async loginPlayer(email: string): Promise<PlayerDto | null> {
     const player = await prismaMySql.player
@@ -26,12 +26,12 @@ export const authenticationMySql: InterfaceAuthentication = {
       .catch((reason) => {
         throw Error(reason);
       });
-			return player ? {
-				playerId: player.playerId.toString(),
-				name: player.name,
-				email: player.email,
-				phone: player.phone,
-				password: player.password
-			} : null;
-		},
+      return player ? {
+        playerId: player.playerId.toString(),
+        name: player.name,
+        email: player.email,
+        phone: player.phone,
+        password: player.password
+      } : null;
+    },
 };

@@ -2,11 +2,10 @@ import {prismaMySql} from "../../database-connection/mysql.database-connection";
 import {WalletDtoSelect} from "../../models/dto/wallet.dto";
 import {InterfacePlayerRepository} from "../interface-player.repository";
 
-
 export const PlayerMysqlRepository: InterfacePlayerRepository = {
   getAllWalletsForPlayer(playerId: string) {
-		console.log("We're in get all wallets for player");
-		const playerIdNumber: number = +playerId;
+    console.log("We're in get all wallets for player");
+    const playerIdNumber: number = +playerId;
     return prismaMySql.wallet.findMany({
       where: {
         fkPlayerId: playerIdNumber,
@@ -15,19 +14,19 @@ export const PlayerMysqlRepository: InterfacePlayerRepository = {
     });
   },
   async playerHasWallet (playerId: string, walletId: string) {
-		const playerIdNumber: number = +playerId;
-		const walletIdNumber: number = +walletId;
+    const playerIdNumber: number = +playerId;
+    const walletIdNumber: number = +walletId;
     const wallet = await prismaMySql.wallet.findUnique({
       where: {
-				walletId: walletIdNumber,
+        walletId: walletIdNumber,
       },
-			select:{
-				fkPlayerId: true,
-				nickname: true,
-				balance: true,
-			}
+      select:{
+        fkPlayerId: true,
+        nickname: true,
+        balance: true,
+      }
     });
 
-		return wallet?.fkPlayerId === playerIdNumber ? wallet : null;
+    return wallet?.fkPlayerId === playerIdNumber ? wallet : null;
   }
 }

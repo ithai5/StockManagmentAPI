@@ -35,18 +35,18 @@ walletRoutes.use("/stock", walletStockRoutes);
 walletRoutes.get(
   "/:walletId", authPlayersWallet, 
   (req: Request, res: Response) => {
-		const walletId: string = req.params.walletId;
-		getWallet(walletId)
-			.then((data) => {
-				if(data){
-					res.json({ wallet: data });
-				} else {
-					res.status(404).send({error: 404, message: "Wallet Not Found"});
-				}
-			})
-			.catch((error: Error) => {
-				res.status(400).send({error: 400, message: "Can not get wallet"});
-				console.log("Error: ", error);
-			});
+    const walletId: string = req.params.walletId;
+    getWallet(walletId)
+      .then((data) => {
+        if(data){
+          res.json({ wallet: data });
+        } else {
+          res.status(404).send({error: 404, message: "Wallet Not Found"});
+        }
+      })
+      .catch((error: Error) => {
+        res.status(400).send({error: 400, message: "Can not get wallet"});
+        console.log("Error: ", error);
+      });
   }
 );

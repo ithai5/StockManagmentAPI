@@ -3,8 +3,8 @@ import { WalletStockMongodbRepository } from "../../repositories/mongodb/wallet-
 import { InterfaceWalletStockDatabaseService } from "../interface-wallet-stock.database-service";
 
 export const walletStockMongodbService: InterfaceWalletStockDatabaseService = {
-	getWalletStocks: (walletId: string) => WalletStockMongodbRepository.getWalletStocks(walletId),
-	getWalletStocksWithStockTicker: function (walletId: string, stockTicker: string): Promise<WalletStockValue | null> {
-		return WalletStockMongodbRepository.getWalletStocksWithStockTicker(walletId, stockTicker);
-	}
+  getWalletStocks: (walletId: string) => WalletStockMongodbRepository.getWalletStocks(walletId),
+  getWalletStocksWithStockTicker: function (walletId: string, stockTicker: string): Promise<WalletStockValue | null> {
+    return WalletStockMongodbRepository.getWalletStocksWithStockTicker(walletId, stockTicker);
+  }
 }

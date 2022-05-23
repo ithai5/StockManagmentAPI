@@ -3,8 +3,8 @@ import { PlayerMongodbRepository } from "../../repositories/mongodb/player.mongo
 import { InterfacePlayerDatabaseService } from "../interface-player.database-service";
 
 export const playerMongodbService: InterfacePlayerDatabaseService = {
-	getAllWalletsForPlayer: (playerId: string) => PlayerMongodbRepository.getAllWalletsForPlayer(playerId),
-	playerHasWallet: async (playerId: string, walletId: string): Promise<WalletDto | null> => {
-			return PlayerMongodbRepository.playerHasWallet(playerId, walletId);
-	}
+  getAllWalletsForPlayer: (playerId: string) => PlayerMongodbRepository.getAllWalletsForPlayer(playerId),
+  playerHasWallet: async (playerId: string, walletId: string): Promise<WalletDto | null> => {
+      return PlayerMongodbRepository.playerHasWallet(playerId, walletId);
+  }
 }

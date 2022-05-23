@@ -5,11 +5,11 @@ import { InterfaceStockDatabaseService } from "../interface-stock.database-servi
 
 
 export const stockMongodbService: InterfaceStockDatabaseService = {
-	getStock: async (stockTicker: string) => {
-		const stock = await StockMongodbRepository.getStock(stockTicker);
-		if (stock) return stock;
-		else throw Error("Stock ticker not found");
-	},
+  getStock: async (stockTicker: string) => {
+    const stock = await StockMongodbRepository.getStock(stockTicker);
+    if (stock) return stock;
+    else throw Error("Stock ticker not found");
+  },
   createStock(stockValue: StockValue): Promise<StockValue | null> {
     return StockMongodbRepository.createStock(stockValue);
   },

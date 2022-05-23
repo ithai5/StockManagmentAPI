@@ -7,7 +7,7 @@ const { Stock } = switchSelectDatabaseService(currentDatabase);
 
 export const getStock = async (stockTicker: string): Promise<StockValue | null> => {
   
-	try {
+  try {
     const cacheStockValue = await Stock.getStock(stockTicker);
 
     const oldestAcceptedUpdateStock = new Date(
@@ -18,7 +18,7 @@ export const getStock = async (stockTicker: string): Promise<StockValue | null> 
       return cacheStockValue;
     }
   } catch (error) {
-		if ((error as Error).message === "Stock ticker not found") {
+    if ((error as Error).message === "Stock ticker not found") {
       const stockFromFinnhub = await finnhubApi.quote(
         stockTicker.toUpperCase()
       );
@@ -37,8 +37,8 @@ export const getStock = async (stockTicker: string): Promise<StockValue | null> 
         throw Error("stock Ticker does not exist in the system");
       }
     } else {
-			throw error;
-		}
+      throw error;
+    }
   }
   const updateResult = await updateCurrentStockValue(stockTicker);
   if (updateResult) {
