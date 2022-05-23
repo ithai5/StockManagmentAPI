@@ -3,9 +3,6 @@ import { InterfaceStockDatabaseService } from "../interface-stock.database-servi
 import { StockValue } from "../../models/dto/stock-value.dto";
 
 export const stockMysqlService: InterfaceStockDatabaseService = {
-  createStock(stockValue: StockValue): Promise<StockValue> {
-    return StockMysqlRepository.createStock(stockValue);
-  },
   getStock: async (stockTicker: string) => {
     const stock = await StockMysqlRepository.getStock(stockTicker);
     if (stock) return stock;
@@ -13,5 +10,8 @@ export const stockMysqlService: InterfaceStockDatabaseService = {
   },
   updateStock: async (currentStockValue: StockValue) => {
     return StockMysqlRepository.updateStock(currentStockValue);
+  },
+  createStock(stockValue: StockValue): Promise<StockValue | null> {
+    return StockMysqlRepository.createStock(stockValue);
   },
 };

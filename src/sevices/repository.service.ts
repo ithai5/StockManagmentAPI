@@ -17,8 +17,7 @@ export function switchSelectDatabaseService(
     case Databases.MySQL:
       return SERVICES.MySQL;
     case Databases.MongoDB:
-    // Note: Not implemented yet
-    // return repositories.MongoDB;
+      return SERVICES.MongoDB;
     case Databases.Neo4j:
     // Note: Not implemented yet
     // return repositories.Neo4j;

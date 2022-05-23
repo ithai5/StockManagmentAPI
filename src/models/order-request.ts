@@ -1,9 +1,10 @@
 export interface OrderRequest {
   orderType: OrderType
-  walletId: number;
+  walletId: string;
   ticker: string;
   amount: number;
 }
+
 
 export enum OrderType {
   Buy = "BUY",

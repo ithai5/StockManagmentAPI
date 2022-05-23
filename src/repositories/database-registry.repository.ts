@@ -13,6 +13,11 @@ import {orderMysqlService} from "../database-service/mysql/order.mysql.service";
 import {playerMysqlService} from "../database-service/mysql/player.mysql.service";
 import {walletMysqlService} from "../database-service/mysql/wallet.mysql.service";
 import {walletStockMysqlService} from "../database-service/mysql/wallet-stock.mysql.service";
+import { playerMongodbService } from "../database-service/mongodb/player.mongodb.service";
+import { walletMongodbService } from "../database-service/mongodb/wallet.mongodb.service";
+import { walletStockMongodbService } from "../database-service/mongodb/wallet-stock.mongodb.service";
+import { stockMongodbService } from "../database-service/mongodb/stock.mongodb.service";
+import { orderMongodbService } from "../database-service/mongodb/order.mongodb.service";
 
 export interface DatabaseService {
   Player: InterfacePlayerDatabaseService;
@@ -29,9 +34,13 @@ export const SERVICES: InterfaceDatabaseService = {
     WalletStock: walletStockMysqlService,
     Stock: stockMysqlService,
     Order: orderMysqlService,
-
-
   },
-  MongoDB: undefined,
+  MongoDB: {
+    Player: playerMongodbService,
+    Wallet: walletMongodbService,
+    WalletStock: walletStockMongodbService,
+    Stock: stockMongodbService,
+    Order: orderMongodbService
+  },
   Neo4j: undefined,
 };

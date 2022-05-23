@@ -33,20 +33,20 @@ walletRoutes.use("/stock", walletStockRoutes);
  *              $ref: '#/components/schemas/WalletResponse'
  */
 walletRoutes.get(
-  "/:walletId",
-  authPlayersWallet,
+  "/:walletId", authPlayersWallet, 
   (req: Request, res: Response) => {
-    if (isNumberRegex(req.params.walletId)) {
-      const walletId: number = +req.params.walletId;
-      getWallet(walletId)
-        .then((data) => {
+    const walletId: string = req.params.walletId;
+    getWallet(walletId)
+      .then((data) => {
+        if(data){
           res.json({ wallet: data });
-        })
-        .catch((error: Error) => {
-          throw error;
-        });
-    } else {
-      res.send({ error: "Id is not a number" });
-    }
+        } else {
+          res.status(404).send({error: 404, message: "Wallet Not Found"});
+        }
+      })
+      .catch((error: Error) => {
+        res.status(400).send({error: 400, message: "Can not get wallet"});
+        console.log("Error: ", error);
+      });
   }
 );

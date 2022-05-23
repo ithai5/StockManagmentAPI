@@ -22,13 +22,17 @@ export const playerRoutes = Router();
  *            schema:
  *              $ref: '#/components/schemas/PlayerWalletResponse'
  */
- playerRoutes.get("/wallets", (req, res) => {
-  getAllWalletsForPlayer(+req.body.playerId)
+playerRoutes.get("/wallets", (req, res) => {
+  getAllWalletsForPlayer(req.body.playerId)
     .then((data) => {
-      res.json({playerWallets: data});
+      if(data){
+        res.json({playerWallets: data});
+      } else {
+        res.status(400).send({error: 404, message: "No wallets found"})
+      }
     })
     .catch((error: Error) => {
-      throw error;
+      console.log("Error in player routes: ", error);
     });
 
   }

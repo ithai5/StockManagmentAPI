@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authPlayersWallet } from "../../middlewares/authorization/auth.middleware";
 import { getWalletStocks } from "../../sevices/wallet-stock.service";
 import { isNumberRegex } from "../../utils/input-checks";
 
@@ -29,17 +30,21 @@ export const walletStockRoutes = Router();
  *            schema:
  *              $ref: '#/components/schemas/WalletStockResponse'
  */
- walletStockRoutes.get("/:walletId", (req, res) => {
-  if(isNumberRegex(req.params.walletId)){
-    const walletId: number = +req.params.walletId;
-    getWalletStocks(walletId)
-      .then((data) => {
+ walletStockRoutes.get("/:walletId", authPlayersWallet, (req, res) => {
+  const walletId: string = req.params.walletId;
+  getWalletStocks(walletId)
+    .then((data) => {
+      if(data){
         res.json({walletStocks: data});
-      })
-      .catch((error: Error) => {
-        throw error;
-      });
-  } else {
-    res.send({error: 'Id is not a number'});
+      } else {
+        // TODO: Decide on the following comment:
+        // Should perhaps just be sending empty data rather than an error!
+        res.status(404).send({error: 404, message: "Wallets stocks not found"});
+      }
+    })
+    .catch((error: Error) => {
+      console.log("Error in wallet stocks route: ", error);
+      res.status(400).send({error: 400, message: "Couldn't handle request for wallets stock"});
+    });
   }
-});
+);

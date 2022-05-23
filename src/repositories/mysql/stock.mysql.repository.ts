@@ -15,7 +15,7 @@ export const StockMysqlRepository: InterfaceStockRepository = {
     });
   },
   async updateStock(currentStockValue: StockValue): Promise<StockValue> {
-    return await prismaMySql.stock.update({
+    return prismaMySql.stock.update({
       where: { stockTicker: currentStockValue.stockTicker },
       data: {
         currentPrice: currentStockValue.currentPrice,
@@ -25,7 +25,7 @@ export const StockMysqlRepository: InterfaceStockRepository = {
     });
   },
   async getStock(stockTicker: string): Promise<StockValue | null> {
-    return await prismaMySql.stock.findUnique({
+    return prismaMySql.stock.findUnique({
       where: {
         stockTicker: stockTicker,
       },

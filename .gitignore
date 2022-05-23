@@ -20,5 +20,11 @@ mynotes.txt
 #Todo-commenting-example:
 todo-comment-example.ts
 
-#Astthor notes in txt:
+# ------- Astthor files: -------
+xyz-my-files
 astthor-notes.txt
+
+# prisma generated files
+prisma/mongodb/client
+prisma/mysql/client
+
