@@ -3,13 +3,14 @@ import { PlayerDto } from "../../models/dto/player.dto";
 import { SignupDto } from "../../models/dto/signup.dto";
 import { InterfaceAuthentication } from "../interface-authentication.repository";
 
-
-export const authenticationMongodb: InterfaceAuthentication = {
-  async signupPlayer(signupDto: SignupDto): Promise<PlayerDto| null> {
-    const player = await prismaMongodb.player.create({ data: signupDto }).catch((reason) => {
-      throw Error(reason);
-    });
-		return player ? player : null;
+export const authenticationMongodbRepository: InterfaceAuthentication = {
+  async signupPlayer(signupDto: SignupDto): Promise<PlayerDto | null> {
+    const player = await prismaMongodb.player
+      .create({ data: signupDto })
+      .catch((reason) => {
+        throw Error(reason);
+      });
+    return player ? player : null;
   },
   async loginPlayer(email: string): Promise<PlayerDto | null> {
     const player = await prismaMongodb.player
@@ -21,6 +22,6 @@ export const authenticationMongodb: InterfaceAuthentication = {
       .catch((reason) => {
         throw Error(reason);
       });
-		return player ? player : null;
+    return player ? player : null;
   },
 };

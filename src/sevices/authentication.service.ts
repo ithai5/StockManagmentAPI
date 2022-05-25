@@ -1,12 +1,10 @@
-import { authenticationMySql } from "../repositories/mysql/authentication.mysql.repository";
 import bcryptjs from "bcryptjs";
 import { PlayerDto } from "../models/dto/player.dto";
-import { InterfaceAuthentication } from "../repositories/interface-authentication.repository";
 import jsonwebtoken, { SignOptions } from "jsonwebtoken";
 import "dotenv/config";
 import { SignupDto } from "../models/dto/signup.dto";
-import { authenticationMongodb } from "../repositories/mongodb/authentication.mongodb.repository";
-
+import { switchSelectDatabaseService } from "./repository.service";
+import { currentDatabase } from "../global/database-control";
 
 export async function getPlayerDtoByEmail(email: string): Promise<PlayerDto> {
   const playerDto = await authentication.loginPlayer(email);
@@ -59,4 +57,4 @@ export const prepareJwt = (bearerToken: string) =>
   bearerToken.replace(/^Bearer\s+/, "");
 
 // should be able to change it to any db connection that implement the Authentication interface
-const authentication: InterfaceAuthentication = authenticationMongodb;
+const { authentication } = switchSelectDatabaseService(currentDatabase);
