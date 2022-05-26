@@ -94,12 +94,10 @@ auth.get("/authorized", authMiddleware, (req, res) => {
 auth.post("/signup", (req: Request<never, never, SignupDto>, res: Response) => {
   signupPlayer(req.body)
     .then((response) => {
-      console.log(response);
       res.status(201);
       res.send({ ...response, password: "************" });
     })
     .catch((error) => {
-      console.log(error);
       res.status(409);
       res.send(error.message);
     });

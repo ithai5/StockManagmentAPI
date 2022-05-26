@@ -5,15 +5,14 @@ import { finnhubApi } from "./api/finnhubConnection";
 
 const { Stock } = switchSelectDatabaseService(currentDatabase);
 
-export const getStock = async (stockTicker: string): Promise<StockValue | null> => {
-  
+export const getStock = async (
+  stockTicker: string
+): Promise<StockValue | null> => {
   try {
     const cacheStockValue = await Stock.getStock(stockTicker);
-
     const oldestAcceptedUpdateStock = new Date(
       dateInUtc().setMinutes(dateInUtc().getMinutes() - 5)
     );
-
     if (oldestAcceptedUpdateStock < cacheStockValue?.lastUpdated!) {
       return cacheStockValue;
     }

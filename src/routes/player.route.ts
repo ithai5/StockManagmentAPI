@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { getAllWalletsForPlayer } from "../sevices/player.service";
 
-
 export const playerRoutes = Router();
 
 /**
@@ -25,15 +24,13 @@ export const playerRoutes = Router();
 playerRoutes.get("/wallets", (req, res) => {
   getAllWalletsForPlayer(req.body.playerId)
     .then((data) => {
-      if(data){
-        res.json({playerWallets: data});
+      if (data) {
+        res.json({ playerWallets: data });
       } else {
-        res.status(400).send({error: 404, message: "No wallets found"})
+        res.status(400).send({ error: 404, message: "No wallets found" });
       }
     })
     .catch((error: Error) => {
       console.log("Error in player routes: ", error);
     });
-
-  }
-);
+});
