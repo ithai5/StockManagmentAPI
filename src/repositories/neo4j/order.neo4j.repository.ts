@@ -58,7 +58,7 @@ export const orderNeo4jRepository = {
                                           stockPrice: $stockPrice, 
                                           stockShares: $amount, 
                                           stockTicker: $ticker })
-                     MERGE (wallet)-[:order]->(order)
+                     MERGE (wallet)-[:ORDERED]->(order)
                      RETURN order
     `,
         { ...orderRequest, stockPrice, walletId: +orderRequest.walletId }
@@ -75,7 +75,7 @@ export const orderNeo4jRepository = {
                                         stockPrice: $avgPrice, 
                                         stockShares: $amount, 
                                         stockTicker: $ticker })
-                   MERGE (wallet)-[:order]->(order)
+                   MERGE (wallet)-[:ORDERED]->(order)
                    DELETE owns
                    RETURN wallet`,
       {
