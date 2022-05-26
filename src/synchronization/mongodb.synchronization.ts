@@ -1,20 +1,18 @@
 import { ObjectId } from "bson";
 import {
   order as orderMongo,
-  walletHasStock as walletHasStockMongodb, 
+  walletHasStock as walletHasStockMongodb,
   stock as stockMongo,
   transferFrom as transferFromMongodb,
   transferTo as transferToMongodb,
-  wallet as walletMongodb, 
-  player as playerMongodb,
+  wallet as walletMongodb,
 } from "../../prisma/mongodb/client";
-import { 
+import {
   order as orderMysql,
   WalletHasStock as walletHasStockMysql,
   stock as stockMysql,
   transfer as transferMysql,
   wallet as walletMysql,
-  player as playerMysql,
 } from "../../prisma/mysql/client";
 import { prismaMongodb } from "../database-connection/mongodb.database-connection";
 import { prismaMySql } from "../database-connection/mysql.database-connection";
@@ -22,15 +20,14 @@ import { prismaMySql } from "../database-connection/mysql.database-connection";
 const walletIdMap = new Map();
 
 interface walletAndTransfers {
-  fkWalletId: number,
-  transfersFrom: transferMysql[],
-  transfersTo: transferMysql[]
+  fkWalletId: number;
+  transfersFrom: transferMysql[];
+  transfersTo: transferMysql[];
 }
 
 function getByValue(map: any, searchValue: string) {
   for (let [key, value] of map.entries()) {
-    if (value === searchValue)
-      return key;
+    if (value === searchValue) return key;
   }
 }
 
@@ -43,35 +40,33 @@ export const populateMongodbPlayersAndWallets = async () => {
           stocks: true,
           transfersFrom: true,
           transfersTo: true,
-        }
-      }
+        },
+      },
     },
     take: 10, // Select how many you want to import, if removed it'll take all
   });
 
-  if(!playerData){
-    console.log("Player data was empty, aborting synchronization!");
+  if (!playerData) {
     return;
   }
 
-  // Need to generate all wallet Ids so that I can reference 
-  playerData.forEach(player => {
-    player.wallets.forEach(wallet => {
+  // Need to generate all wallet Ids so that I can reference
+  playerData.forEach((player) => {
+    player.wallets.forEach((wallet) => {
       const genId = new ObjectId().toHexString();
       walletIdMap.set(wallet.walletId, genId);
-    })
-  })
+    });
+  });
 
-  // Loop through all players: 
-  const playerAndWalletsCreated = playerData.map( async (playerObj) => {
-    
+  // Loop through all players:
+  const playerAndWalletsCreated = playerData.map(async (playerObj) => {
     const createdPlayer = await prismaMongodb.player.create({
       data: {
         name: playerObj.name,
         email: playerObj.email,
         phone: playerObj.phone,
-        password: playerObj.password
-      }
+        password: playerObj.password,
+      },
     });
 
     // Had some troubles with the async, was creating before I got to update.
@@ -79,20 +74,20 @@ export const populateMongodbPlayersAndWallets = async () => {
     //			 so it was probably that, a 'foreign key constraint' equivalent from mongo.
     const walletsMysqlTransfers: walletAndTransfers[] = [];
     // Loop through players wallets:
-    const walletsCreated = playerObj.wallets.map( async (walletObj) => {
-
+    const walletsCreated = playerObj.wallets.map(async (walletObj) => {
       const wallet: walletMongodb = mapWallet(walletObj);
       const orders: orderMongo[] = mapOrdersMysqlToMongodb(walletObj.orders);
-      const walletStocks: walletHasStockMongodb[] = mapWalletHasStockMysqlToMongodb(walletObj.stocks);
+      const walletStocks: walletHasStockMongodb[] =
+        mapWalletHasStockMysqlToMongodb(walletObj.stocks);
       walletsMysqlTransfers.push({
         fkWalletId: walletObj.walletId,
         transfersFrom: walletObj.transfersFrom,
-        transfersTo: walletObj.transfersTo
-      })
+        transfersTo: walletObj.transfersTo,
+      });
 
       return prismaMongodb.wallet.create({
         data: {
-          player: {connect: { playerId: createdPlayer.playerId}},
+          player: { connect: { playerId: createdPlayer.playerId } },
           walletId: wallet.walletId,
           nickname: wallet.nickname,
           balance: wallet.balance,
@@ -101,35 +96,37 @@ export const populateMongodbPlayersAndWallets = async () => {
           orders: orders,
           transfersFrom: [],
           transfersTo: [],
-        }
+        },
       });
-      
     });
 
     const updatedWallets = walletsCreated.map(async (obj) => {
       const findMysqlWallet = walletsMysqlTransfers.find(async (w) => {
         w.fkWalletId === getByValue(walletIdMap, (await obj).walletId);
-      })
+      });
       return prismaMongodb.wallet.update({
         where: {
-          walletId: (await obj).walletId
+          walletId: (await obj).walletId,
         },
         data: {
-          transfersFrom: mapTransfersMysqlToMongodb(findMysqlWallet!.transfersFrom, false) as transferFromMongodb[],
-          transfersTo: mapTransfersMysqlToMongodb(findMysqlWallet!.transfersTo, true) as transferToMongodb[],
-        }
+          transfersFrom: mapTransfersMysqlToMongodb(
+            findMysqlWallet!.transfersFrom,
+            false
+          ) as transferFromMongodb[],
+          transfersTo: mapTransfersMysqlToMongodb(
+            findMysqlWallet!.transfersTo,
+            true
+          ) as transferToMongodb[],
+        },
       });
-    })
-  
-    console.log("__________________________________________________________________");
-    console.log("Player and wallets for that player created : \n", {player: createdPlayer, wallets: updatedWallets});
-    console.log("__________________________________________________________________");
-    return {player: createdPlayer, wallets: updatedWallets}
+    });
+
+    return { player: createdPlayer, wallets: updatedWallets };
   });
-}
+};
 
 export const populateStocksMongo = async () => {
-  const stocksGetMysql = await prismaMySql.stock.findMany({take: 1});
+  const stocksGetMysql = await prismaMySql.stock.findMany({ take: 1 });
   const mongosStocks = mapStocksMysqlToMongodb(stocksGetMysql);
   const created = await prismaMongodb.stock.create({
     data: {
@@ -139,14 +136,13 @@ export const populateStocksMongo = async () => {
       currentPrice: mongosStocks[0].currentPrice,
       percentChange: mongosStocks[0].percentChange,
       lastUpdated: mongosStocks[0].lastUpdated,
-    }
-  })
-  console.log("Stocks created: ", created);
-}
+    },
+  });
+};
 
 const mapWallet = (walletObj: walletMysql) => {
   const genId = new ObjectId().toHexString();
-  walletIdMap.set(walletObj.walletId, genId); 
+  walletIdMap.set(walletObj.walletId, genId);
   const wallet: walletMongodb = {
     walletId: genId, // Either generate or create here.
     fkPlayerId: walletObj.fkPlayerId.toString(),
@@ -159,7 +155,7 @@ const mapWallet = (walletObj: walletMysql) => {
     transfersTo: [],
   };
   return wallet;
-}
+};
 
 const mapOrdersMysqlToMongodb = (orderMysql: orderMysql[]) => {
   return orderMysql.map((e) => {
@@ -168,22 +164,24 @@ const mapOrdersMysqlToMongodb = (orderMysql: orderMysql[]) => {
       stockPrice: e.stockShares,
       stockShares: e.stockShares,
       date: e.date,
-      type: e.type
-    }
+      type: e.type,
+    };
     return order;
-  })
-}
+  });
+};
 
-const mapWalletHasStockMysqlToMongodb = (walletHasStocksMysql: walletHasStockMysql[]) => {
+const mapWalletHasStockMysqlToMongodb = (
+  walletHasStocksMysql: walletHasStockMysql[]
+) => {
   return walletHasStocksMysql.map((e) => {
     const walletHasStock: walletHasStockMongodb = {
       stockTicker: e.fkStockTicker,
       avgPrice: e.avgPrice,
-      stockShares: e.stockShares
+      stockShares: e.stockShares,
     };
     return walletHasStock;
-  })
-}
+  });
+};
 
 const mapStocksMysqlToMongodb = (stocksMysql: stockMysql[]) => {
   return stocksMysql.map((e) => {
@@ -195,29 +193,31 @@ const mapStocksMysqlToMongodb = (stocksMysql: stockMysql[]) => {
       description: e.description,
       currentPrice: e.currentPrice,
       percentChange: e.percentChange,
-      lastUpdated: e.lastUpdated
+      lastUpdated: e.lastUpdated,
     };
     return stock;
-  })
-}
+  });
+};
 
-
-const mapTransfersMysqlToMongodb = (transfersMysql: transferMysql[], isTransfersTo: boolean) => {
+const mapTransfersMysqlToMongodb = (
+  transfersMysql: transferMysql[],
+  isTransfersTo: boolean
+) => {
   return transfersMysql.map((e) => {
-    if(isTransfersTo){
+    if (isTransfersTo) {
       const transfer: transferToMongodb = {
         walletTo: walletIdMap.get(e.fkWalletTo),
         date: e.date,
-        amount: e.amount
-      }
+        amount: e.amount,
+      };
       return transfer;
     } else {
       const transfer: transferFromMongodb = {
         walletFrom: walletIdMap.get(e.fkWalletFrom),
         date: e.date,
-        amount: e.amount
-      }
+        amount: e.amount,
+      };
       return transfer;
     }
-  })
-}
+  });
+};

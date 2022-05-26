@@ -10,13 +10,9 @@ export const getStock = async (
 ): Promise<StockValue | null> => {
   try {
     const cacheStockValue = await Stock.getStock(stockTicker);
-
     const oldestAcceptedUpdateStock = new Date(
       dateInUtc().setMinutes(dateInUtc().getMinutes() - 5)
     );
-
-    console.log("oldestAcceptedUpdateStock: ", oldestAcceptedUpdateStock);
-    console.log("cacheStockValue: ", cacheStockValue);
     if (oldestAcceptedUpdateStock < cacheStockValue?.lastUpdated!) {
       return cacheStockValue;
     }

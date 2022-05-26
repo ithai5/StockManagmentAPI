@@ -4,7 +4,6 @@ import { neo4jConnection } from "../../database-connection/neo4j.database-connec
 
 export const stockNeo4jRepository: InterfaceStockRepository = {
   async createStock(stockValue: StockValue): Promise<StockValue | null> {
-    console.log("stockValue: ", stockValue);
     const stock = (
       await neo4jConnection(
         `CREATE (stock:Stock {stockTicker: $stockTicker, 
@@ -24,21 +23,15 @@ export const stockNeo4jRepository: InterfaceStockRepository = {
   async getStock(stockTicker: string): Promise<StockValue | null> {
     const stock = await neo4jConnection(
       `MATCH (stock:Stock {stockTicker: $stockTicker }) RETURN stock`,
-      { stockTicker }
+      { stockTicker: stockTicker }
     );
-    console.log(
-      "stock.records[0].get(0).properties: ",
-      stock.records[0].get(0).properties
-    );
-    if (stock.records[0])
-      return {
-        ...stock.records[0].get(0).properties,
-        lastUpdated: new Date(stock.records[0].get(0).properties.lastUpdated),
-      };
-    else throw Error("Stock ticker not found");
+    if (stock.records.length === 0) throw Error("Stock ticker not found");
+    return {
+      ...stock.records[0].get(0).properties,
+      lastUpdated: new Date(stock.records[0].get(0).properties.lastUpdated),
+    };
   },
   async updateStock(currentStockValue: StockValue): Promise<StockValue | null> {
-    console.log("currentStockValue: ", currentStockValue);
     const stock = await neo4jConnection(
       `MATCH (stock:Stock {stockTicker: $stockTicker }) 
                      SET stock.currentPrice= $currentPrice,

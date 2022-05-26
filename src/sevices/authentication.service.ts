@@ -29,7 +29,7 @@ export const loginAuthentication = async (email: string, password: string) => {
   if (passwordDecrypted(password, playerDto.password))
     return generateJwtToken(
       { playerId: playerDto.playerId },
-      { expiresIn: "10m" }
+      { expiresIn: "1d" }
     );
   else throw Error("password and mail does not matched");
 };
