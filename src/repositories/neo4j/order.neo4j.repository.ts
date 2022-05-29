@@ -29,7 +29,7 @@ export const orderNeo4jRepository = {
   ) => {
     return (
       await neo4jConnection(
-        `MATCH (wallet:Wallet)-[owns:OWNS]->(stock:Stock {stockTicker: $ticker}) WHERE id(wallet)=$walletId 
+        `MATCH (wallet:Wallet {walletId: $walletId})-[owns:OWNS]->(stock:Stock {stockTicker: $ticker})
                      SET owns.avgPrice= $avgPrice ,
                          owns.stockShares= owns.stockShares + $amount, 
                          wallet.balance=$remainingBalance
@@ -52,7 +52,7 @@ export const orderNeo4jRepository = {
   createOrderNode: async (orderRequest: OrderRequest, stockPrice: number) => {
     return (
       await neo4jConnection(
-        `MATCH (wallet:Wallet) WHERE id(wallet)= $walletId
+        `MATCH (wallet:Wallet {walletId: $walletId})
                      CREATE (order:Order {type: $orderType, 
                                           date: dateTime(), 
                                           stockPrice: $stockPrice, 
@@ -67,14 +67,13 @@ export const orderNeo4jRepository = {
   },
   orderSellingStock: async (orderRequest: OrderRequest, avgPrice: number) => {
     const queryResult = await neo4jConnection(
-      `MATCH (wallet:Wallet)-[owns:OWNS]->(stock:Stock {stockTicker: $ticker})
-                   WHERE id(wallet)=$walletId
+      `MATCH (wallet:Wallet {walletId: $walletId})-[owns:OWNS]->(stock:Stock {stockTicker: $ticker})
                    SET wallet.balance=wallet.balance + (owns.stockShares*owns.avgPrice)
                    CREATE (order:Order {type: $orderType, 
                                         date: dateTime(), 
-                                        stockPrice: $avgPrice, 
+                                        stockPrice: stock.currentPrice, 
                                         stockShares: $amount, 
-                                        stockTicker: $ticker })
+                                        stockTicker: stock.stockTicker })
                    MERGE (wallet)-[:ORDERED]->(order)
                    DELETE owns
                    RETURN wallet`,
@@ -89,8 +88,7 @@ export const orderNeo4jRepository = {
   },
   updateSellingStock: async (orderRequest: OrderRequest, avgPrice: number) => {
     const queryResult = await neo4jConnection(
-      `MATCH (wallet:Wallet)-[owns:OWNS]->(stock:Stock {stockTicker: $ticker})
-                   WHERE id(wallet)=$walletId
+      `MATCH (wallet:Wallet {walletId: $walletId})-[owns:OWNS]->(stock:Stock {stockTicker: $ticker})
                    SET wallet.balance=wallet.balance + (owns.stockShares*owns.avgPrice), 
                        owns.stockShares=owns.stockShares-$amount
                    CREATE (order:Order {type: $orderType, 

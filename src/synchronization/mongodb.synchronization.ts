@@ -16,11 +16,12 @@ import {
 } from "../../prisma/mysql/client";
 import { prismaMongodb } from "../database-connection/mongodb.database-connection";
 import { prismaMySql } from "../database-connection/mysql.database-connection";
+import { stringify } from "uuid";
 
 const walletIdMap = new Map();
 
 interface walletAndTransfers {
-  fkWalletId: number;
+  fkWalletId: string;
   transfersFrom: transferMysql[];
   transfersTo: transferMysql[];
 }
@@ -80,7 +81,7 @@ export const populateMongodbPlayersAndWallets = async () => {
       const walletStocks: walletHasStockMongodb[] =
         mapWalletHasStockMysqlToMongodb(walletObj.stocks);
       walletsMysqlTransfers.push({
-        fkWalletId: walletObj.walletId,
+        fkWalletId: stringify(walletObj.walletId),
         transfersFrom: walletObj.transfersFrom,
         transfersTo: walletObj.transfersTo,
       });

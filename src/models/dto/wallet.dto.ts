@@ -14,6 +14,7 @@ export const walletStockValueSelect =
   });
 
 export interface WalletDto {
+  walletId: string;
   nickname: string;
   balance: number;
 }
@@ -24,6 +25,7 @@ export interface WalletDto {
  * Keeping the above WalletDto as our general dto.
  */
 export const WalletDtoSelect = Prisma.validator<Prisma.walletSelect>()({
+  walletId: true,
   nickname: true,
   balance: true,
 });
