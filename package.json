@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "startbuild": "tsc -b & node build/app.js",
+    "build": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
     "start": "node build/app.js",
     "postinstall": "npm run prisma-generate && npm run startbuild",
     "tdd": "nodemon --exec jest",
