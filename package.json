@@ -13,8 +13,6 @@
     "dev": "yarn install && yarn start",
     "devthor": "npx nodemon ./src/app.ts",
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io",
-    "build": "tsc",
-    "postinstall": "npm run prisma-generate && npm run build",
     "start-heroku": "npm run prisma-generate & npm run startbuild"
   },
   "keywords": [],
