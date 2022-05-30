@@ -6,16 +6,14 @@
   "scripts": {
     "test": "jest",
     "startbuild": "tsc -b & node build/app.js",
-    "startdev": "nodemon --exec yarn startbuild",
-    "start": "node build/app.js",
+    "start": "nodemon --exec yarn startbuild",
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull  && pal schema camel-case && npx prisma generate",
     "prisma-generate": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
-    "dev": "yarn install && yarn startdev",
+    "dev": "yarn install && yarn start",
     "devthor": "npx nodemon ./src/app.ts",
-    "build": "npm run startbuild",
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io",
-    "postinstall": "npm run prisma-generate"
+    "build": "npm run prisma-generate && tsc"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +32,7 @@
     "neo4j-driver": "^4.4.5",
     "swagger-jsdoc": "^6.2.0",
     "swagger-ui-express": "^4.3.0",
+    "tsc": "^2.0.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
