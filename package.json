@@ -17,6 +17,9 @@
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io",
     "postinstall": "npm run prisma-generate && tsc"
   },
+  "engines": {
+    "node": "16.0.0"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
