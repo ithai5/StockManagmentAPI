@@ -15,7 +15,7 @@
     "dev": "yarn install && yarn startdev",
     "devthor": "npx nodemon ./src/app.ts",
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io",
-    "postinstall": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma && tsc"
+    "postinstall": "npm run prisma-generate && tsc"
   },
   "keywords": [],
   "author": "",
