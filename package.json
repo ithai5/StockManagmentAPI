@@ -8,7 +8,7 @@
     "startbuild": "tsc -b & node build/app.js",
     "startdev": "nodemon --exec yarn startbuild",
     "start": "node build/app.js",
-    "build": "prisma-generate",
+    "build": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull  && pal schema camel-case && npx prisma generate",
     "prisma-generate": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
