@@ -15,6 +15,7 @@
     "devthor": "npx nodemon ./src/app.ts",
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io"
   },
+  "engines": { "node": "14.17.0"},
   "keywords": [],
   "author": "",
   "license": "MIT",
