@@ -15,7 +15,7 @@
     "devthor": "npx nodemon ./src/app.ts",
     "build": "npm run prisma-generate",
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io",
-    "postinstall": "tsc"
+    "postinstall": "npm run prisma-generate && tsc"
   },
   "keywords": [],
   "author": "",
