@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "startbuild": "npm run prisma-generate & tsc -b & node build/app.js",
+    "startbuild": "npm run prisma-generate & tsc -b ",
     "build": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull && pal schema camel-case && npx prisma generate",
