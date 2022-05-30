@@ -7,7 +7,7 @@
     "test": "jest",
     "startbuild": "tsc -b & node build/app.js",
     "start": "node build/app.js",
-    "postinstall": "npm run prisma-generate && tsc -b",
+    "postinstall": "npm run prisma-generate && npm run startbuild",
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull  && pal schema camel-case && npx prisma generate",
     "prisma-generate": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
