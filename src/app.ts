@@ -11,7 +11,7 @@ import { playerRoutes } from "./routes/player.route";
 import { orderRoutes } from "./routes/order.route";
 import { stockRoutes } from "./routes/stock.route";
 
-const PORT = process.env.APP_PORT || 4200;
+const PORT = process.env.PORT || 4200;
 const app = express();
 app.use(express.json());
 app.use(cors());
