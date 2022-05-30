@@ -34,7 +34,7 @@ model wallet {
 model order {
       orderId       Bytes        @id @db.Binary(16) @map("order_id")
       wallet		wallet?		 @relation(fields: [fkWalletId], references: [walletId])
-      fkWalletId    Bytes?       @db.Binary(16)
+      fkWalletId    Bytes?       @db.Binary(16) @map("fk_wallet_id")
       fkStockTicker String       @map("fk_stock_ticker") @db.VarChar(15)
       type          order_type
       date          DateTime     @default(now()) @db.Timestamp(0)

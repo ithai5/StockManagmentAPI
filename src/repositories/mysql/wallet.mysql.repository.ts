@@ -1,18 +1,18 @@
 import { InterfaceWalletRepository } from "../interface-wallet.repository";
 import { prismaMySql } from "../../database-connection/mysql.database-connection";
 import { WalletDto, WalletDtoSelect } from "../../models/dto/wallet.dto";
-import { parse, stringify } from "uuid";
+import { stringify } from "uuid";
+import { convertUUIDToBin } from "../../utils/uuid-management";
 
 export const WalletMysqlRepository: InterfaceWalletRepository = {
-  async createWallet(walletId: string, playerId: string): Promise<WalletDto> {
-    console.log(Buffer.from(Array.from(parse(walletId))));
+  async createWallet(playerId: string, walletId: string): Promise<WalletDto> {
     const result = await prismaMySql.wallet.create({
       data: {
-        walletId: Buffer.from(Array.from(parse(walletId))),
+        walletId: convertUUIDToBin(walletId),
         balance: 1000000,
         nickname: walletId,
-        fkPlayerId: Buffer.from(Array.from(parse(playerId))),
         created: new Date(),
+        fkPlayerId: convertUUIDToBin(playerId)
       },
     });
     return { ...result, walletId: stringify(result.walletId) };
@@ -20,11 +20,11 @@ export const WalletMysqlRepository: InterfaceWalletRepository = {
   async getWallet(walletId) {
     const result = await prismaMySql.wallet.findUnique({
       where: {
-        walletId: Buffer.from(walletId),
+        walletId: convertUUIDToBin(walletId),
       },
-      select: WalletDtoSelect,
+      select: { ...WalletDtoSelect },
     });
     if (result === null) return null;
-    return { ...result, walletId: stringify(result.walletId) };
+    return { ...result, walletId: stringify(result.walletId)};
   },
 };

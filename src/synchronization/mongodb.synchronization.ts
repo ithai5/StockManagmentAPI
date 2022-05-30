@@ -63,6 +63,7 @@ export const populateMongodbPlayersAndWallets = async () => {
   const playerAndWalletsCreated = playerData.map(async (playerObj) => {
     const createdPlayer = await prismaMongodb.player.create({
       data: {
+        playerId: stringify(playerObj.playerId),
         name: playerObj.name,
         email: playerObj.email,
         phone: playerObj.phone,
@@ -145,7 +146,8 @@ const mapWallet = (walletObj: walletMysql) => {
   const genId = new ObjectId().toHexString();
   walletIdMap.set(walletObj.walletId, genId);
   const wallet: walletMongodb = {
-    walletId: genId, // Either generate or create here.
+    id: genId, // Either generate or create here.
+    walletId: stringify(walletObj.walletId),
     fkPlayerId: walletObj.fkPlayerId.toString(),
     nickname: walletObj.nickname,
     balance: walletObj.balance,

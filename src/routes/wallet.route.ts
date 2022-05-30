@@ -36,10 +36,11 @@ walletRoutes.get(
   authPlayersWallet,
   (req: Request, res: Response) => {
     const walletId: string = req.params.walletId;
+    console.log(req.params);
     getWallet(walletId)
       .then((data) => {
         if (data) {
-          res.json({ wallet: data });
+          res.send({ wallet: data });
         } else {
           res.status(404).send({ error: 404, message: "Wallet Not Found" });
         }

@@ -5,7 +5,7 @@ import "dotenv/config";
 import { SignupDto } from "../models/dto/signup.dto";
 import { switchSelectDatabaseService } from "./repository.service";
 import { currentDatabase } from "../global/database-control";
-import { v4 as uuid } from "uuid";
+import { v4 } from "uuid";
 
 export async function getPlayerDtoByEmail(email: string): Promise<PlayerDto> {
   const playerDto = await authentication.loginPlayer(email);
@@ -50,7 +50,7 @@ const prepareSignupPlayer = (signupDto: SignupDto) => {
   return {
     ...signupDto,
     password: bcryptjs.hashSync(signupDto.password),
-    playerId: uuid(),
+    playerId: v4(),
   };
 };
 

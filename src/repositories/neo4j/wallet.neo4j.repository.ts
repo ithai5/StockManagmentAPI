@@ -3,7 +3,7 @@ import { WalletDto } from "../../models/dto/wallet.dto";
 import { neo4jConnection } from "../../database-connection/neo4j.database-connection";
 
 export const walletNeo4jRepository: InterfaceWalletRepository = {
-  async createWallet(walletId: string, playerId: string): Promise<WalletDto> {
+  async createWallet( playerId: string,walletId: string): Promise<WalletDto> {
     const result = await neo4jConnection(
       `MATCH (player:Player {playerId: $playerId}) 
                    CREATE (wallet:Wallet {walletId: $walletId, balance:1000000, nickname: $walletId}) 

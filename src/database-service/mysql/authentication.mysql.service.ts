@@ -9,10 +9,8 @@ export const authenticationMySqlService: InterfaceAuthenticationDatabaseService 
       return authenticationMySqlRepository.loginPlayer(email);
     },
     signupPlayer(signupDto: SignupDto): Promise<PlayerDto | null> {
-      console.log(signupDto.playerId.replace("-", ""));
       return authenticationMySqlRepository.signupPlayer({
         ...signupDto,
-        playerId: signupDto.playerId.replace("-", ""),
       });
     },
   };

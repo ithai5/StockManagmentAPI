@@ -2,12 +2,13 @@ import { prismaMySql } from "../../database-connection/mysql.database-connection
 import { WalletDtoSelect } from "../../models/dto/wallet.dto";
 import { InterfacePlayerRepository } from "../interface-player.repository";
 import { stringify } from "uuid";
+import { convertUUIDToBin } from "../../utils/uuid-management";
 
 export const PlayerMysqlRepository: InterfacePlayerRepository = {
   async getAllWalletsForPlayer(playerId: string) {
     const result = await prismaMySql.wallet.findMany({
       where: {
-        fkPlayerId: Buffer.from(playerId),
+        fkPlayerId: convertUUIDToBin(playerId),
       },
       select: WalletDtoSelect,
     });
@@ -18,7 +19,7 @@ export const PlayerMysqlRepository: InterfacePlayerRepository = {
   async playerHasWallet(playerId: string, walletId: string) {
     const wallet = await prismaMySql.wallet.findUnique({
       where: {
-        walletId: Buffer.from(walletId),
+        walletId: convertUUIDToBin(walletId),
       },
       select: {
         fkPlayerId: true,
@@ -27,9 +28,9 @@ export const PlayerMysqlRepository: InterfacePlayerRepository = {
         walletId: true,
       },
     });
-
-    return wallet?.fkPlayerId === Buffer.from(playerId)
-      ? { ...wallet, walletId: stringify(wallet.walletId) }
-      : null;
-  },
+    if (wallet && stringify(wallet.fkPlayerId) === (playerId))
+      return { walletId: stringify(wallet.walletId), balance: wallet.balance, nickname: wallet.nickname }
+    else
+      return null
+  }
 };

@@ -2,22 +2,22 @@ import { InterfaceOrderRepository } from "../interface-order.repository";
 import { OrderRequest, OrderType } from "../../models/order-request";
 import { prismaMySql } from "../../database-connection/mysql.database-connection";
 import { Prisma } from "@prisma/client";
-import { parse, stringify } from "uuid";
+import {  stringify } from "uuid";
+import { convertUUIDToBin } from "../../utils/uuid-management";
 
 export const OrderMysqlRepository: InterfaceOrderRepository = {
   async placeOrder(orderRequest: OrderRequest, currentPrice: number) {
-    const walletIdNumber: number = +orderRequest.walletId;
     await prismaMySql.$executeRaw(Prisma.sql`CALL safe_order_transaction (
                           ${orderRequest.orderType},
                           ${orderRequest.ticker},
-                          ${walletIdNumber},
+                          ${orderRequest.walletId},
                           ${orderRequest.amount},
                           ${currentPrice});`);
 
     const latestOrder = await prismaMySql.order.findMany({
       where: {
         fkStockTicker: orderRequest.ticker,
-        fkWalletId: Buffer.from(Array.from(parse(orderRequest.walletId))),
+        fkWalletId: convertUUIDToBin(orderRequest.walletId),
       },
       orderBy: {
         orderId: "desc",

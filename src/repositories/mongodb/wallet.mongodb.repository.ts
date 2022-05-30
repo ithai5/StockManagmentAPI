@@ -4,13 +4,13 @@ import { InterfaceWalletRepository } from "../interface-wallet.repository";
 
 // Todo : Test endpoint
 export const WalletMongodbRepository: InterfaceWalletRepository = {
-  async createWallet(walletId: string, playerId: string): Promise<WalletDto> {
+  async createWallet( playerId: string,walletId: string): Promise<WalletDto> {
     return prismaMongodb.wallet.create({
       data: {
-        walletId: walletId.replace("-", ""),
+        walletId: walletId,
         balance: 1000000,
         created: new Date(),
-        fkPlayerId: playerId.replace("-", ""),
+        fkPlayerId: playerId,
         nickname: walletId,
       },
     });

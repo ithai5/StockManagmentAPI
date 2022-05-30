@@ -11,7 +11,6 @@ export const authenticationMongodbService: InterfaceAuthenticationDatabaseServic
     signupPlayer(signupDto: SignupDto): Promise<PlayerDto | null> {
       return authenticationMongodbRepository.signupPlayer({
         ...signupDto,
-        playerId: signupDto.playerId.replace("-", ""),
       });
     },
   };

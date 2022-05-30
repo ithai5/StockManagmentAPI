@@ -8,7 +8,7 @@ export const orderNeo4jRepository = {
   ) => {
     const queryResult = await neo4jConnection(
       `MATCH (stock:Stock {stockTicker: $ticker}) 
-                   MATCH (wallet:Wallet) WHERE id(wallet)=$walletId
+                   MATCH (wallet:Wallet {walletId:$walletId}) 
                    MERGE (wallet)-[owns:OWNS {avgPrice: $avgPrice, stockShares: $amount}]->(stock)
                    SET wallet.balance=wallet.balance-($amount*$avgPrice)
                    CREATE (order:Order {type: $orderType, 
@@ -18,7 +18,7 @@ export const orderNeo4jRepository = {
                                         stockTicker: $ticker })
                    MERGE (wallet)-[:ORDERED]->(order)
                    RETURN owns`,
-      { ...orderRequest, avgPrice, walletId: +orderRequest.walletId }
+      { ...orderRequest, avgPrice}
     );
     return queryResult.records[0].get(0).properties;
   },
@@ -43,7 +43,6 @@ export const orderNeo4jRepository = {
         {
           ...orderRequest,
           avgPrice,
-          walletId: +orderRequest.walletId,
           remainingBalance: walletBalance - avgPrice * orderRequest.amount,
         }
       )
@@ -61,7 +60,7 @@ export const orderNeo4jRepository = {
                      MERGE (wallet)-[:ORDERED]->(order)
                      RETURN order
     `,
-        { ...orderRequest, stockPrice, walletId: +orderRequest.walletId }
+        { ...orderRequest, stockPrice }
       )
     ).records[0].get(0).properties;
   },
@@ -80,7 +79,6 @@ export const orderNeo4jRepository = {
       {
         ...orderRequest,
         avgPrice,
-        walletId: +orderRequest.walletId,
         orderType: orderRequest.orderType,
       }
     );
@@ -98,7 +96,7 @@ export const orderNeo4jRepository = {
                                         stockTicker: $ticker })
                    MERGE (wallet)-[:ORDERED]->(order)
                    RETURN wallet`,
-      { ...orderRequest, avgPrice, walletId: +orderRequest.walletId }
+      { ...orderRequest, avgPrice }
     );
     return queryResult.records[0].get("wallet").properties;
   },

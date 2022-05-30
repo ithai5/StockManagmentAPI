@@ -2,7 +2,8 @@ import { InterfaceAuthentication } from "../interface-authentication.repository"
 import { PlayerDto } from "../../models/dto/player.dto";
 import { prismaMySql } from "../../database-connection/mysql.database-connection";
 import { SignupDto } from "../../models/dto/signup.dto";
-import { parse, stringify } from "uuid";
+import {  stringify } from "uuid";
+import { convertUUIDToBin } from "../../utils/uuid-management";
 
 export const authenticationMySqlRepository: InterfaceAuthentication = {
   async signupPlayer(signupDto: SignupDto): Promise<PlayerDto | null> {
@@ -10,7 +11,7 @@ export const authenticationMySqlRepository: InterfaceAuthentication = {
       .create({
         data: {
           ...signupDto,
-          playerId: Buffer.from(Array.from(parse(signupDto.playerId))),
+          playerId: convertUUIDToBin(signupDto.playerId),
         },
       })
       .catch((reason) => {

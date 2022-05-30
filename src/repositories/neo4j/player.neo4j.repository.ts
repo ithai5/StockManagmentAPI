@@ -16,7 +16,7 @@ export const playerNeo4jRepository: InterfacePlayerRepository = {
   ): Promise<WalletDto | null> {
     const queryResult = await neo4jConnection(
       `MATCH (player:Player {playerId: $playerId})-[:HAS]->(wallet:Wallet {walletId: $walletId}) RETURN wallet`,
-      { playerId: playerId, walletId: +walletId }
+      { playerId: playerId, walletId: walletId }
     );
     return queryResult.records[0].get(0).properties;
   },
