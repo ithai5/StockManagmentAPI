@@ -1,1 +1,1 @@
-worker: npm run start-heroku
+web: node build/app.js
