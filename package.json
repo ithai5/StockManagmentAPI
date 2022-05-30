@@ -7,18 +7,14 @@
     "test": "jest",
     "startbuild": "tsc -b & node build/app.js",
     "startdev": "nodemon --exec yarn startbuild",
-    "start": "tsc -b & node build/app.js",
-    "build": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
+    "start": "node build/app.js",
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull  && pal schema camel-case && npx prisma generate",
     "prisma-generate": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
     "dev": "yarn install && yarn startdev",
     "devthor": "npx nodemon ./src/app.ts",
-    "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io",
-    "postinstall": "npm run prisma-generate && tsc"
-  },
-  "engines": {
-    "node": "14.17.0"
+    "build": "npm run prisma-generate",
+    "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io"
   },
   "keywords": [],
   "author": "",
