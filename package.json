@@ -13,9 +13,9 @@
     "prisma-generate": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
     "dev": "yarn install && yarn startdev",
     "devthor": "npx nodemon ./src/app.ts",
-    "build": "npm run prisma-generate",
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io",
-    "postinstall": "npm run prisma-generate && tsc"
+    "postinstall": "npm run prisma-generate && echo 'prisma was genated successfuly' && tsc",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
