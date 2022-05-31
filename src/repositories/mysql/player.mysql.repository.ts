@@ -5,7 +5,7 @@ import { stringify } from "uuid";
 import { convertUUIDToBin } from "../../utils/uuid-management";
 
 export const PlayerMysqlRepository: InterfacePlayerRepository = {
-  getAllWalletsForPlayer(playerId: string): Promise<WalletDto[] | null> {
+  async getAllWalletsForPlayer(playerId: string): Promise<WalletDto[] | null> {
     const result = await prismaMySql.wallet.findMany({
       where: {
         fkPlayerId: convertUUIDToBin(playerId),
