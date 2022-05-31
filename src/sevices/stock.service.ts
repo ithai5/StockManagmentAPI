@@ -13,10 +13,13 @@ export const getStock = async (
     const oldestAcceptedUpdateStock = new Date(
       dateInUtc().setMinutes(dateInUtc().getMinutes() - 5)
     );
+		console.log("Cached stock value not throwing error");
     if (oldestAcceptedUpdateStock < cacheStockValue?.lastUpdated!) {
+			console.log("Stock service get stock, accepted price");
       return cacheStockValue;
     }
   } catch (error) {
+		console.log("We've got an error in fetching stock: ", error);
     if ((error as Error).message === "Stock ticker not found") {
       const stockFromFinnhub = await finnhubApi.quote(
         stockTicker.toUpperCase()
@@ -33,6 +36,7 @@ export const getStock = async (
         };
         await Stock.createStock(createNewStock);
       } else {
+				console.log("Stock ticker doesn't exist in through the api: ");
         throw Error("stock Ticker does not exist in the system");
       }
     } else {
@@ -43,6 +47,7 @@ export const getStock = async (
   if (updateResult) {
     return getStock(stockTicker);
   }
+	console.log("Got to updated: ", updateResult);
   throw new Error("I dont have a name yet");
 };
 
