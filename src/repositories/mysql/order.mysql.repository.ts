@@ -1,7 +1,8 @@
 import { InterfaceOrderRepository } from "../interface-order.repository";
 import {OrderRequest, OrderType} from "../../models/order-request";
 import {prismaMySql} from "../../database-connection/mysql.database-connection";
-import {Prisma} from "@prisma/client";
+import { Prisma } from "../../../prisma/mysql/client";
+
 
 export const OrderMysqlRepository: InterfaceOrderRepository = {
   async placeOrder(orderRequest: OrderRequest, currentPrice: number ) {

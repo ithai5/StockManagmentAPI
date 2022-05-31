@@ -1,9 +1,9 @@
 import { prismaMySql } from "../../database-connection/mysql.database-connection";
-import { WalletDtoSelect } from "../../models/dto/wallet.dto";
+import { WalletDto, WalletDtoSelect } from "../../models/dto/wallet.dto";
 import { InterfacePlayerRepository } from "../interface-player.repository";
 
 export const PlayerMysqlRepository: InterfacePlayerRepository = {
-  getAllWalletsForPlayer(playerId: string) {
+  getAllWalletsForPlayer(playerId: string): Promise<WalletDto[] | null> {
     const playerIdNumber: number = +playerId;
     return prismaMySql.wallet.findMany({
       where: {
