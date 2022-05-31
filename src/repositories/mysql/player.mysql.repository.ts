@@ -1,11 +1,11 @@
 import { prismaMySql } from "../../database-connection/mysql.database-connection";
-import { WalletDtoSelect } from "../../models/dto/wallet.dto";
+import { WalletDto, WalletDtoSelect } from "../../models/dto/wallet.dto";
 import { InterfacePlayerRepository } from "../interface-player.repository";
 import { stringify } from "uuid";
 import { convertUUIDToBin } from "../../utils/uuid-management";
 
 export const PlayerMysqlRepository: InterfacePlayerRepository = {
-  async getAllWalletsForPlayer(playerId: string) {
+  async getAllWalletsForPlayer(playerId: string): Promise<WalletDto[] | null> {
     const result = await prismaMySql.wallet.findMany({
       where: {
         fkPlayerId: convertUUIDToBin(playerId),

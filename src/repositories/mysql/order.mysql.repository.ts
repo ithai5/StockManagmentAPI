@@ -1,7 +1,7 @@
 import { InterfaceOrderRepository } from "../interface-order.repository";
-import { OrderRequest, OrderType } from "../../models/order-request";
-import { prismaMySql } from "../../database-connection/mysql.database-connection";
-import { Prisma } from "@prisma/client";
+import {OrderRequest, OrderType} from "../../models/order-request";
+import {prismaMySql} from "../../database-connection/mysql.database-connection";
+import { Prisma } from "../../../prisma/mysql/client";
 import {  stringify } from "uuid";
 import { convertUUIDToBin } from "../../utils/uuid-management";
 

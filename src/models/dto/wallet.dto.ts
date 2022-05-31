@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../prisma/mysql/client";
+import { prismaMySql } from "../../database-connection/mysql.database-connection";
 
 export interface WalletStockValue {
   stockTicker: string;
@@ -7,7 +8,7 @@ export interface WalletStockValue {
 }
 
 export const walletStockValueSelect =
-  Prisma.validator<Prisma.WalletHasStockSelect>()({
+	Prisma.validator<Prisma.WalletHasStockSelect>()({
     fkStockTicker: true,
     stockShares: true,
     avgPrice: true,

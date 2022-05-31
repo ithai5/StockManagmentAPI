@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
+// Change 1
 app.use("/authorization", auth);
 app.use("/wallet", [authMiddleware], walletRoutes);
 app.use("/player", [authMiddleware], playerRoutes);
