@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "startbuild": "tsc -b & node build/app.js",
-    "start": "nodemon --exec yarn startbuild",
+    "start": "node build/app.js",
+		"postinstall": "tsc",
     "tdd": "nodemon --exec jest",
     "prisma": "prisma init --datasource-provider mysql && prisma db pull  && pal schema camel-case && npx prisma generate",
     "prisma-generate": "npx prisma generate --schema ./prisma/mysql/schema.prisma && npx prisma generate --schema ./prisma/mongodb/schema.prisma",
@@ -14,13 +15,19 @@
     "devthor": "npx nodemon ./src/app.ts",
     "finnhub-swagger": "npx swagger-typescript-api -p https://finnhub.io/static/swagger.json -o ./src/swagger/finnhub.io"
   },
-  "keywords": [],
+  "keywords": [
+		"node",
+    "typescript",
+    "express",
+    "api"],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^3.12.0",
     "@types/bson": "^4.2.0",
     "@types/mongodb": "^4.0.7",
+		"@types/express": "^4.17.13",
+		"@types/node": "^17.0.21",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
