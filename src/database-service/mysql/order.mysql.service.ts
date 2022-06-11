@@ -16,6 +16,13 @@ export const orderMysqlService: InterfaceOrderDatabaseService = {
     if (!wallet) {
       return null;
     }
+    console.log("result mysql: ", {
+      stockTicker: orderCreated.ticker,
+      amount: orderCreated.amount,
+      pricePerStock: currentPrice,
+      date: new Date(),
+      balanceRemaining: wallet.balance,
+    });
     return {
       stockTicker: orderCreated.ticker,
       amount: orderCreated.amount,

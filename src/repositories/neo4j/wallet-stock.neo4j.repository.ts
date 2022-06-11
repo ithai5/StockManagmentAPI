@@ -5,7 +5,7 @@ export const walletStockNeo4jRepository = {
     const queryResult = await neo4jConnection(
       `MATCH (wallet:Wallet {walletId: $walletId})-[owns:OWNS]->(stock:Stock {stockTicker:$stockTicker}) 
                    RETURN owns, stock`,
-      { walletId: +walletId, stockTicker: stockTicker }
+      { walletId: walletId, stockTicker: stockTicker }
     );
     if (queryResult.records.length === 0) return null;
     return {
