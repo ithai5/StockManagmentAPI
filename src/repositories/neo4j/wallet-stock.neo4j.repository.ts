@@ -3,9 +3,9 @@ import { neo4jConnection } from "../../database-connection/neo4j.database-connec
 export const walletStockNeo4jRepository = {
   getWalletStocks: async (walletId: string, stockTicker: string) => {
     const queryResult = await neo4jConnection(
-      `MATCH (wallet:Wallet)-[owns:OWNS]->(stock:Stock {stockTicker:$stockTicker}) 
-                   WHERE id(wallet)=$walletId RETURN owns, stock`,
-      { walletId: +walletId, stockTicker: stockTicker }
+      `MATCH (wallet:Wallet {walletId: $walletId})-[owns:OWNS]->(stock:Stock {stockTicker:$stockTicker}) 
+                   RETURN owns, stock`,
+      { walletId: walletId, stockTicker: stockTicker }
     );
     if (queryResult.records.length === 0) return null;
     return {

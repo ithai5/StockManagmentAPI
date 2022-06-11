@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../prisma/mysql/client";
+import { prismaMySql } from "../../database-connection/mysql.database-connection";
 
 export interface WalletStockValue {
   stockTicker: string;
@@ -7,13 +8,14 @@ export interface WalletStockValue {
 }
 
 export const walletStockValueSelect =
-  Prisma.validator<Prisma.WalletHasStockSelect>()({
+	Prisma.validator<Prisma.WalletHasStockSelect>()({
     fkStockTicker: true,
     stockShares: true,
     avgPrice: true,
   });
 
 export interface WalletDto {
+  walletId: string;
   nickname: string;
   balance: number;
 }
@@ -24,6 +26,7 @@ export interface WalletDto {
  * Keeping the above WalletDto as our general dto.
  */
 export const WalletDtoSelect = Prisma.validator<Prisma.walletSelect>()({
+  walletId: true,
   nickname: true,
   balance: true,
 });

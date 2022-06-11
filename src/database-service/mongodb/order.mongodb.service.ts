@@ -29,7 +29,6 @@ export interface OrderActionDetails {
 
 export const orderMongodbService: InterfaceOrderDatabaseService = {
   createOrder: async (orderRequest: OrderRequest, currentPrice: number): Promise<OrderDetail | null> => {
-    
     const walletBeforeOrder = await walletMongodbService.getWallet(orderRequest.walletId);
     if(!walletBeforeOrder){
       throw new Error("Could not get wallet before placing order");
@@ -47,7 +46,9 @@ export const orderMongodbService: InterfaceOrderDatabaseService = {
       updatedBalance
     } = getPlaceOrderActionDetails(walletStock, orderRequest, currentPrice, walletBeforeOrder.balance);
 
-    return OrderMongodbRepository.placeOrder(orderRequest, currentPrice, {action, avgBuyPrice, totalShares, updatedBalance});
+    const result =  await OrderMongodbRepository.placeOrder(orderRequest, currentPrice, {action, avgBuyPrice, totalShares, updatedBalance});
+    console.log("mongo result: ", result);
+    return result
   },
 }
 
