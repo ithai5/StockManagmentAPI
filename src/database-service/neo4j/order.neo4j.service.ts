@@ -41,6 +41,8 @@ export const orderNeo4jService: InterfaceOrderDatabaseService = {
         );
         break;
       case OrderType.Sell:
+        console.log("walletHasStock: ", walletHasStock);
+        console.log("orderRequest: ", orderRequest);
         if (
           walletHasStock === null ||
           walletHasStock.stockShares < orderRequest.amount
@@ -60,6 +62,13 @@ export const orderNeo4jService: InterfaceOrderDatabaseService = {
     const remainingWalletBalance = await walletNeo4jService.getWallet(
       orderRequest.walletId
     );
+    console.log("result neo4j: ", {
+      stockTicker: orderRequest.ticker,
+      amount: orderRequest.amount,
+      pricePerStock: currentPrice,
+      balanceRemaining: remainingWalletBalance?.balance,
+      date: new Date(),
+    });
     return {
       stockTicker: orderRequest.ticker,
       amount: orderRequest.amount,
