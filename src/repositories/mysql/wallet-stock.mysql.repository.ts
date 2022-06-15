@@ -3,13 +3,14 @@ import {
   WalletStockValue,
   walletStockValueSelect,
 } from "../../models/dto/wallet.dto";
+import { convertUUIDToBin } from "../../utils/uuid-management";
 import { InterfaceWalletStockRepository } from "../interface-wallet-stock.repository";
 
 export const WalletStockMysqlRepository: InterfaceWalletStockRepository = {
   async getWalletStocks(walletId) {
     const queryResult = await prismaMySql.walletHasStock.findMany({
       where: {
-        fkWalletId: Buffer.from(walletId),
+        fkWalletId: convertUUIDToBin(walletId),
       },
       select: walletStockValueSelect,
     });
@@ -28,7 +29,7 @@ export const WalletStockMysqlRepository: InterfaceWalletStockRepository = {
   ): Promise<WalletStockValue | null> {
     const queryResult = await prismaMySql.walletHasStock.findMany({
       where: {
-        fkWalletId: Buffer.from(walletId),
+        fkWalletId: convertUUIDToBin(walletId),
       },
       select: walletStockValueSelect,
     });
