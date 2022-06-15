@@ -4,12 +4,12 @@ import { walletStockNeo4jRepository } from "../../repositories/neo4j/wallet-stoc
 
 export const walletStockNeo4jService: InterfaceWalletStockDatabaseService = {
   getWalletStocks(walletId: string): Promise<WalletStockValue[] | null> {
-    throw Error("not implemented");
+    return walletStockNeo4jRepository.getWalletStocks(walletId);
   },
   getWalletStocksWithStockTicker(
     walletId: string,
     stockTicker: string
   ): Promise<WalletStockValue | null> {
-    return walletStockNeo4jRepository.getWalletStocks(walletId, stockTicker);
+    return walletStockNeo4jRepository.getWalletStocksWithStockTicker(walletId, stockTicker);
   },
 };

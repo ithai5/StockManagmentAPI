@@ -1,7 +1,15 @@
 import { neo4jConnection } from "../../database-connection/neo4j.database-connection";
+import { WalletStockValue } from "../../models/dto/wallet.dto";
 
 export const walletStockNeo4jRepository = {
-  getWalletStocks: async (walletId: string, stockTicker: string) => {
+	async getWalletStocks(walletId: string): Promise<WalletStockValue[] | null> {
+    const queryResult = await neo4jConnection(
+      `MATCH (wallet:Wallet {walletId: $walletId})-[:OWNS]->(stock:Stock) RETURN stock`,
+      { walletId: walletId }
+    );
+    return queryResult.records.map((res) => res.get(0).properties);
+  },
+  getWalletStocksWithStockTicker: async (walletId: string, stockTicker: string) => {
     const queryResult = await neo4jConnection(
       `MATCH (wallet:Wallet {walletId: $walletId})-[owns:OWNS]->(stock:Stock {stockTicker:$stockTicker}) 
                    RETURN owns, stock`,
